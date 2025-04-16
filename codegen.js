@@ -68,3 +68,5 @@ async function generateCode(prompt) {
     console.error("An unexpected error occurred:", err);
   }
 })();
+
+// node codegen.js "Create a simple todo list app" - run this command in terminal to generate code
