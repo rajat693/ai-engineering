@@ -1,18 +1,16 @@
 {
-  "name": "ai-engineering",
+  "name": "weather-tool",
   "version": "1.0.0",
-  "main": "codegen.js",
+  "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node weather-tool.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "@langchain/core": "^0.3.44",
-    "@langchain/openai": "^0.5.5",
-    "axios": "^1.8.4",
-    "dotenv": "^16.5.0"
+    "dotenv": "^16.3.1",
+    "langchain": "^0.1.0",
+    "@langchain/openai": "^0.0.10",
+    "@langchain/core": "^0.1.0",
+    "@langchain/community": "^0.0.34",
+    "openai": "^4.0.0"
   }
 }
