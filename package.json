@@ -1,9 +1,10 @@
 {
-  "name": "weather-tool",
+  "name": "gluestack-converter",
   "version": "1.0.0",
+  "description": "HTML to Gluestack UI Component Converter",
   "type": "commonjs",
   "scripts": {
-    "start": "node weather-tool.js"
+    "start": "node gluestack-converter-tool.js"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
