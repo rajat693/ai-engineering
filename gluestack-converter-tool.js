@@ -7,7 +7,7 @@ const { initializeAgentExecutorWithOptions } = require("langchain/agents");
 // Load environment variables
 dotenv.config();
 
-function convertToGluestackComponents(htmlCode) {
+function convertTagsToGluestackTags(htmlCode) {
   // Mapping of HTML tags to Gluestack components
   const tagMap = {
     div: "Box",
@@ -17,8 +17,7 @@ function convertToGluestackComponents(htmlCode) {
     h4: 'Heading size="lg"',
     h5: 'Heading size="md"',
     h6: 'Heading size="sm"',
-    input: "Input",
-    "input-field": "InputField",
+    input: "InputField",
     button: "Button",
     "button-text": "ButtonText",
     form: "Box",
@@ -32,14 +31,23 @@ function convertToGluestackComponents(htmlCode) {
   // Step 2: Replace matched tags with corresponding Gluestack tags
   const convertedCode = htmlCode.replace(
     tagRegex, // First argument: what to find
-    (match, closingSlash, tagName, rest) => {
+    (match, openingTag, tagName, rest) => {
       // Second argument: what to do with each find
-      
+      console.log("match", match);
+      console.log("openingTag", openingTag);
+      console.log("tagName", tagName);
+      console.log("rest", rest);
+
       // Look up the tag in our mapping
       const gluestackTag = tagMap[tagName] || tagName;
 
+      // Special handling for input to wrap with Input
+      if (tagName === "input") {
+        return `<Input>${opening || "<"}${gluestackTag}${rest}</Input>`;
+      }
+
       // Reconstruct the tag with potential closing slash and rest of the attributes
-      return `${closingSlash || "<"}${gluestackTag}${rest}`;
+      return `${opening || "<"}${gluestackTag}${rest}`;
     }
   );
 
@@ -67,7 +75,7 @@ async function main() {
   const conversionTool = new DynamicTool({
     name: "html_to_gluestack_converter",
     description: "Converts HTML tags to Gluestack UI components",
-    func: async (input) => convertToGluestackComponents(input),
+    func: async (input) => convertTagsToGluestackTags(input),
   });
 
   // Initialize the language model
