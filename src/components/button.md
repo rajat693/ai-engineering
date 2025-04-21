@@ -1,3 +1,8 @@
+---
+title: Button
+description: A versatile button component for React & React Native with customizable properties.
+---
+
 # Button
 
 A versatile button component for React & React Native with customizable properties.

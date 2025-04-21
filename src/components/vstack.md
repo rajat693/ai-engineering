@@ -1,3 +1,8 @@
+---
+title: VStack
+description: A layout component that arranges children vertically with customizable spacing.
+---
+
 # VStack
 
 A layout component that arranges children vertically with customizable spacing.

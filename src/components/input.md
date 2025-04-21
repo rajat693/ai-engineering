@@ -1,3 +1,8 @@
+---
+title: Input
+description: A flexible input component with validation and styling options.
+---
+
 # Input
 
 A flexible input component with validation and styling options.

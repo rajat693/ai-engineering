@@ -1,3 +1,8 @@
+---
+title: Heading
+description: A customizable heading component with various size options that renders semantically correct headings.
+---
+
 # Heading
 
 A customizable heading component with various size options that renders semantically correct headings.
