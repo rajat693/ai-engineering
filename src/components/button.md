@@ -44,3 +44,24 @@ Shows loading state in buttons.
 
 Container for multiple buttons with space and flexDirection props.
 RetryClaude can make mistakes. Please double-check responses.
+
+## Example
+
+```jsx
+import { Button, ButtonText, ButtonIcon } from "@/components/ui/button";
+import { ArrowUpIcon } from "@/components/ui/icon";
+
+function Example() {
+  return (
+    <Button className="bg-blue-300 data-[hover=true]:bg-blue-400 rounded-full shadow-md">
+      <ButtonText className="font-medium text-sm text-typography-900">
+        Back to top
+      </ButtonText>
+      <ButtonIcon
+        as={ArrowUpIcon}
+        className="h-3 w-3 text-background-900 ml-1"
+      />
+    </Button>
+  );
+}
+```

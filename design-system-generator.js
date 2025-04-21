@@ -245,8 +245,10 @@ async function main() {
       - Use ONLY components from the documented design system
       - NO HTML tags like <div>, <button>, <input>, etc.
       - NO external component libraries
-      - Complete code with imports from individual component and implementation
-      - Output ONLY the React component code, no explanations
+      - NO StyleSheet or styles objects - use ONLY Tailwind CSS classes
+      - All components accept Tailwind CSS classes via the className prop
+      - Components should be imported individually from their respective files, not grouped together in a single import statement. 
+      - Output ONLY the complete React component code, no explanations
       
       OPTIMIZATION:
       - Select the minimum number of components needed
