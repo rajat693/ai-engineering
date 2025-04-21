@@ -15,6 +15,58 @@ dotenv.config();
 const COMPONENTS_DIR = "./src/components";
 
 /**
+ * Extracts metadata from component documentation
+ * @param {string} componentName - Name of the component
+ * @returns {object} Metadata object
+ */
+function extractComponentMetadata(componentName) {
+  try {
+    const docPath = path.join(
+      COMPONENTS_DIR,
+      `${componentName.toLowerCase()}.md`
+    );
+
+    if (!fs.existsSync(docPath)) {
+      return { title: componentName, description: "Component not found" };
+    }
+
+    const docsContent = fs.readFileSync(docPath, "utf-8");
+    const lines = docsContent.split("\n");
+
+    // Check if file starts with frontmatter
+    if (lines[0].trim() !== "---") {
+      return { title: componentName, description: "No description available" };
+    }
+
+    // Extract only title and description
+    const metadata = {
+      title: componentName,
+      description: "No description available",
+    };
+
+    // Read until the closing frontmatter delimiter
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+
+      if (line === "---") break;
+
+      if (line.startsWith("title:")) {
+        metadata.title = line.split(":")[1].trim();
+      } else if (line.startsWith("description:")) {
+        metadata.description = line.split(":")[1].trim();
+      }
+    }
+
+    return metadata;
+  } catch (error) {
+    console.error(
+      `Error reading metadata for ${componentName}: ${error.message}`
+    );
+    return { title: componentName, description: "Error reading metadata" };
+  }
+}
+
+/**
  * Gets a list of all available component docs from the components directory
  * @returns {Array} List of available component names
  */
@@ -31,6 +83,24 @@ function getAvailableComponents() {
     console.error(`Error reading components directory: ${error.message}`);
     return [];
   }
+}
+
+/**
+ * Gets metadata for all components
+ * @returns {string} JSON string of component metadata
+ */
+function getAllComponentMetadata() {
+  const components = getAvailableComponents();
+  const metadata = {};
+
+  components.forEach((component) => {
+    const meta = extractComponentMetadata(component);
+    if (meta) {
+      metadata[component] = meta;
+    }
+  });
+
+  return JSON.stringify(metadata, null, 2);
 }
 
 /**
@@ -59,23 +129,6 @@ function getComponentDocs(componentName) {
   } catch (error) {
     return `Error retrieving documentation for ${componentName}: ${error.message}`;
   }
-}
-
-/**
- * Gets documentation for all components
- * @returns {string} All component documentation
- */
-function getAllComponentDocs() {
-  const components = getAvailableComponents();
-  let allDocs = `Available components: ${components.join(", ")}\n\n`;
-
-  components.forEach((component) => {
-    allDocs += `\n==== ${component.toUpperCase()} COMPONENT ====\n`;
-    allDocs += getComponentDocs(component);
-    allDocs += "\n\n";
-  });
-
-  return allDocs;
 }
 
 /**
@@ -117,12 +170,13 @@ async function main() {
   // Create tools using the newer tool helper function
   const getComponentDocsTool = tool(
     async ({ componentName }) => {
+      console.log(`📖 Reading full documentation for: ${componentName}`);
       return getComponentDocs(componentName.trim());
     },
     {
       name: "get_component_docs",
       description:
-        "Gets documentation for a specific component. Input should be the component name without .md extension.",
+        "Gets full documentation for a specific component. Use this ONLY after selecting components based on metadata.",
       schema: z.object({
         componentName: z
           .string()
@@ -131,33 +185,42 @@ async function main() {
     }
   );
 
-  const getAllComponentDocsTool = tool(
+  const getComponentMetadataTool = tool(
     async () => {
-      return getAllComponentDocs();
+      console.log("🔍 Reading component metadata...");
+      return getAllComponentMetadata();
     },
     {
-      name: "get_all_component_docs",
+      name: "get_component_metadata",
       description:
-        "Gets documentation for all available components in the design system.",
+        "Gets metadata (title and description) for all components. Use this FIRST to decide which components are relevant.",
       schema: z.object({}),
     }
   );
 
-  const listComponentsTool = tool(
-    async () => {
-      return availableComponents.join(", ");
+  const selectComponentsTool = tool(
+    async ({ selectedComponents }) => {
+      console.log(`✅ Selected components: ${selectedComponents.join(", ")}`);
+      return `You have selected: ${selectedComponents.join(
+        ", "
+      )}. Now proceed to get full documentation for these components only.`;
     },
     {
-      name: "list_components",
-      description: "Lists all available components in the design system.",
-      schema: z.object({}),
+      name: "select_components",
+      description:
+        "After reading component metadata, use this to select which components you need for the task. This helps track which components to read fully.",
+      schema: z.object({
+        selectedComponents: z
+          .array(z.string())
+          .describe("Array of component names that are relevant for the task"),
+      }),
     }
   );
 
   const tools = [
+    getComponentMetadataTool,
+    selectComponentsTool,
     getComponentDocsTool,
-    getAllComponentDocsTool,
-    listComponentsTool,
   ];
 
   // Initialize the language model
@@ -166,24 +229,29 @@ async function main() {
     model: "gpt-4", // Using GPT-4 for better code generation
   });
 
-  // Enhanced prompt template with more specific instructions
+  // Enhanced prompt template with explicit component selection step
   const prompt = ChatPromptTemplate.fromMessages([
     [
       "system",
       `You are a React expert specializing in the provided design system.
       
-      CRITICAL INSTRUCTIONS:
-      1. First, use the get_all_component_docs tool to see all available components in the design system
-      2. Then generate a COMPLETE React component file that includes:
-         - All necessary imports from the design system
-         - The full component implementation
-         - Proper TypeScript/JavaScript syntax
-      3. Use ONLY components from the documented design system
-      4. DO NOT use ANY HTML tags like <div>, <button>, <input>, etc.
-      5. DO NOT use external component libraries
-      6. Maintain proper component hierarchy and props as defined in the documentation
+      STRICT WORKFLOW (follow in order):
+      1. Use the get_component_metadata tool to see titles and descriptions
+      2. Use the select_components tool to explicitly select which components you need
+      3. Use get_component_docs tool ONLY for the components you selected
+      4. Generate the React component code
       
-      YOUR RESPONSE SHOULD BE A COMPLETE REACT COMPONENT FILE, NOT JUST AN EXPLANATION.`,
+      REQUIREMENTS:
+      - Use ONLY components from the documented design system
+      - NO HTML tags like <div>, <button>, <input>, etc.
+      - NO external component libraries
+      - Complete code with imports from individual component and implementation
+      - Output ONLY the React component code, no explanations
+      
+      OPTIMIZATION:
+      - Select the minimum number of components needed
+      - Base selection on metadata relevance to the task
+      - Only read full documentation for selected components`,
     ],
     ["human", "{input}"],
     ["placeholder", "{agent_scratchpad}"],
@@ -207,24 +275,16 @@ async function main() {
   const agentExecutor = new AgentExecutor({
     agent,
     tools,
+    verbose: false, // controls whether detailed information is shown during the agent's execution.
   });
 
-  // Execute the query with enhanced instructions
+  // Execute the query
   try {
-    console.log(`Processing request: "${query}"`);
-    console.log("Generating code based on your design system...");
-
-    // First, get all component docs to ensure the AI knows what's available
-    const allDocs = getAllComponentDocs();
-
-    // Enhanced query with specific instructions
-    const enhancedQuery = `${query}
-    IMPORTANT: I need you to generate a complete React component file for this request, using ONLY the components from the design system. Here are all the available components:
-    ${allDocs}
-    Now, generate the complete React component code based on my request. The output should be a ready-to-use React component file with all necessary imports and implementation.`;
+    console.log(`\n🚀 Processing request: "${query}"`);
+    console.log("Analyzing component metadata and generating code...\n");
 
     const result = await agentExecutor.invoke({
-      input: enhancedQuery,
+      input: query,
     });
 
     // Print only the output code
@@ -239,4 +299,4 @@ async function main() {
 // Run the main function
 main();
 
-//node design-system-generator.js "create a very basic login screen using my design system only provide me the codebase"
+//node design-system-generator.js "create a login screen give me the codebase and strictly use only the design system components no html tags should be used"

@@ -1,3 +1,8 @@
+---
+title: HStack
+description: A layout component that arranges children horizontally with customizable spacing.
+---
+
 # HStack
 
 A layout component that arranges children horizontally with customizable spacing.

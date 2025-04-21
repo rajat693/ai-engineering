@@ -1,3 +1,8 @@
+---
+title: Text
+description: Adaptable text component with multiple styling options.
+---
+
 # Text
 
 Adaptable text component with multiple styling options.

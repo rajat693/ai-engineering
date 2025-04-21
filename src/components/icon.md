@@ -1,3 +1,8 @@
+---
+title: Icon
+description: A scalable icon component for React Native and web applications with built-in icons collection.
+---
+
 # Icon
 
 A scalable icon component for React Native and web applications with built-in icons collection.

@@ -1,3 +1,8 @@
+---
+title: FormControl
+description: A component to build accessible form fields with labels, helper text, and error handling.
+---
+
 # FormControl
 
 A component to build accessible form fields with labels, helper text, and error handling.
