@@ -3,8 +3,10 @@ const dotenv = require("dotenv");
 const fs = require("fs");
 const path = require("path");
 const { ChatOpenAI } = require("@langchain/openai");
-const { DynamicTool } = require("@langchain/core/tools");
-const { initializeAgentExecutorWithOptions } = require("langchain/agents");
+const { tool } = require("@langchain/core/tools");
+const { ChatPromptTemplate } = require("@langchain/core/prompts");
+const { createToolCallingAgent, AgentExecutor } = require("langchain/agents");
+const { z } = require("zod");
 
 // Load environment variables
 dotenv.config();
@@ -112,62 +114,123 @@ async function main() {
   );
   console.log("Components:", availableComponents.join(", "));
 
-  // Create a tool to get a specific component's documentation
-  const getComponentDocsTool = new DynamicTool({
-    name: "get_component_docs",
-    description:
-      "Gets documentation for a specific component. Input should be the component name without .md extension.",
-    func: async (input) => getComponentDocs(input.trim()),
-  });
-
-  // Create a tool to get all component documentation
-  const getAllComponentDocsTool = new DynamicTool({
-    name: "get_all_component_docs",
-    description:
-      "Gets documentation for all available components in the design system.",
-    func: async () => getAllComponentDocs(),
-  });
-
-  // Create a tool to list available components
-  const listComponentsTool = new DynamicTool({
-    name: "list_components",
-    description: "Lists all available components in the design system.",
-    func: async () => availableComponents.join(", "),
-  });
-
-  // Initialize the language model
-  const model = new ChatOpenAI({
-    temperature: 0.2,
-    modelName: "gpt-4", // Using GPT-4 for better code generation
-  });
-
-  // Create the agent executor
-  const executor = await initializeAgentExecutorWithOptions(
-    [getComponentDocsTool, getAllComponentDocsTool, listComponentsTool],
-    model,
+  // Create tools using the newer tool helper function
+  const getComponentDocsTool = tool(
+    async ({ componentName }) => {
+      return getComponentDocs(componentName.trim());
+    },
     {
-      agentType: "zero-shot-react-description",
-      verbose: false,
+      name: "get_component_docs",
+      description:
+        "Gets documentation for a specific component. Input should be the component name without .md extension.",
+      schema: z.object({
+        componentName: z
+          .string()
+          .describe("The name of the component without .md extension"),
+      }),
     }
   );
 
-  // Execute the query
+  const getAllComponentDocsTool = tool(
+    async () => {
+      return getAllComponentDocs();
+    },
+    {
+      name: "get_all_component_docs",
+      description:
+        "Gets documentation for all available components in the design system.",
+      schema: z.object({}),
+    }
+  );
+
+  const listComponentsTool = tool(
+    async () => {
+      return availableComponents.join(", ");
+    },
+    {
+      name: "list_components",
+      description: "Lists all available components in the design system.",
+      schema: z.object({}),
+    }
+  );
+
+  const tools = [
+    getComponentDocsTool,
+    getAllComponentDocsTool,
+    listComponentsTool,
+  ];
+
+  // Initialize the language model
+  const llm = new ChatOpenAI({
+    temperature: 0.2,
+    model: "gpt-4", // Using GPT-4 for better code generation
+  });
+
+  // Enhanced prompt template with more specific instructions
+  const prompt = ChatPromptTemplate.fromMessages([
+    [
+      "system",
+      `You are a React expert specializing in the provided design system.
+      
+      CRITICAL INSTRUCTIONS:
+      1. First, use the get_all_component_docs tool to see all available components in the design system
+      2. Then generate a COMPLETE React component file that includes:
+         - All necessary imports from the design system
+         - The full component implementation
+         - Proper TypeScript/JavaScript syntax
+      3. Use ONLY components from the documented design system
+      4. DO NOT use ANY HTML tags like <div>, <button>, <input>, etc.
+      5. DO NOT use external component libraries
+      6. Maintain proper component hierarchy and props as defined in the documentation
+      
+      YOUR RESPONSE SHOULD BE A COMPLETE REACT COMPONENT FILE, NOT JUST AN EXPLANATION.`,
+    ],
+    ["human", "{input}"],
+    ["placeholder", "{agent_scratchpad}"],
+  ]);
+
+  /** Without the {agent_scratchpad}, the agent wouldn't be able to:
+
+    - Remember which tools it has already called
+    - See the results of those tool calls
+    - Make decisions based on previous steps
+  */
+
+  // Create the agent
+  const agent = await createToolCallingAgent({
+    llm,
+    tools,
+    prompt,
+  });
+
+  // Create the agent executor
+  const agentExecutor = new AgentExecutor({
+    agent,
+    tools,
+  });
+
+  // Execute the query with enhanced instructions
   try {
     console.log(`Processing request: "${query}"`);
     console.log("Generating code based on your design system...");
 
-    const result = await executor.call({
-      input: `You are a React & React Native expert specializing in the provided design system.
-      For the request: "${query}"
-      GUIDELINES:
-      - Use ONLY components from the documented design system and use className to style the component as shown in the docs
-      - No HTML tags, CSS classes, or external component libraries
-      - Maintain proper component hierarchy and props as defined in the documentation
-      - always give the complete code to the user with the import statements and etc.`,
+    // First, get all component docs to ensure the AI knows what's available
+    const allDocs = getAllComponentDocs();
+
+    // Enhanced query with specific instructions
+    const enhancedQuery = `${query}
+    IMPORTANT: I need you to generate a complete React component file for this request, using ONLY the components from the design system. Here are all the available components:
+    ${allDocs}
+    Now, generate the complete React component code based on my request. The output should be a ready-to-use React component file with all necessary imports and implementation.`;
+
+    const result = await agentExecutor.invoke({
+      input: enhancedQuery,
     });
 
     // Print only the output code
+    console.log("\n=== Generated Component Code ===\n");
     console.log(result.output);
+    console.log("\n================================\n");
   } catch (error) {
     console.error("Error generating UI from design system:", error);
   }
@@ -176,4 +239,4 @@ async function main() {
 // Run the main function
 main();
 
-//node design-system-generator.js "create a login screen give me the codebase and strictly use only the design system components no html tags should be used"
+//node design-system-generator.js "create a very basic login screen using my design system only provide me the codebase"
