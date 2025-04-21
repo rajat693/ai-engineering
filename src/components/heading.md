@@ -29,3 +29,17 @@ as: React.ElementType (optional) - override the rendered element
 ### Semantic Mapping
 
 Size Web Native 5xl, 4xl, 3xl<h1>H1 2xl<h2>H2 xl<h3>H3 lg<h4>H4 md<h5>H5 sm, xs<h6>H6
+
+## Example
+
+```jsx
+import { Heading } from "@/components/ui/heading";
+
+function Example() {
+  return (
+    <Heading className="text-2xl font-bold text-gray-800 mb-4 tracking-tight">
+      I am a Heading
+    </Heading>
+  );
+}
+```

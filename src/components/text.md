@@ -24,3 +24,15 @@ underline: boolean (default: false)
 strikeThrough: boolean (default: false)
 highlight: boolean (default: false)
 isTruncated: boolean (default: false)
+
+## Example
+
+```jsx
+import { Text } from "@/components/ui/text";
+
+function Example() {
+  return (
+    <Text className="text-gray-800 text-base font-normal">Hello World!</Text>
+  );
+}
+```

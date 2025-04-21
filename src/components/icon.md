@@ -24,28 +24,30 @@ All SVG props are supported
 ## Built-in Icons
 
 The library includes many common icons:
-Navigation: ArrowUpIcon, ArrowDownIcon, ArrowLeftIcon, ArrowRightIcon, ChevronUpIcon, etc.
-Actions: AddIcon, RemoveIcon, CheckIcon, CloseIcon, SearchIcon, etc.
-UI elements: MenuIcon, EyeIcon, EyeOffIcon, BellIcon, etc.
-Status: AlertCircleIcon, CheckCircleIcon, InfoIcon, etc.
+AddIcon, AlertCircleIcon, ArrowUpIcon, ArrowDownIcon, ArrowRightIcon, ArrowLeftIcon, AtSignIcon, BellIcon, CalendarDaysIcon, CheckIcon, CheckCircleIcon, ChevronUpIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, ChevronsUpDownIcon, CircleIcon, ClockIcon, CloseIcon, CloseCircleIcon, CopyIcon, DownloadIcon, EditIcon, EyeIcon, EyeOffIcon, FavouriteIcon, GlobeIcon, GripVerticalIcon, HelpCircleIcon, InfoIcon, LinkIcon, ExternalLinkIcon, LoaderIcon, LockIcon, MailIcon, MenuIcon, MessageCircleIcon, MoonIcon, PaperclipIcon, PhoneIcon, PlayIcon, RemoveIcon, RepeatIcon, Repeat1Icon, SearchIcon, SettingsIcon, ShareIcon, SlashIcon, StarIcon, SunIcon, ThreeDotsIcon, TrashIcon, UnlockIcon
 
-## Usage with Lucide Icons
+Note: For icons not available in the built-in collection, you can import them directly from 'lucide-react-native'.
+
+## Example
+
+### Usage with Lucide Icons
 
 ```jsx
 import { Icon } from "@/components/ui/icon";
+import { Box } from "@/components/ui/box";
 import { Camera, Instagram } from "lucide-react-native";
 
 function Example() {
   return (
-    <>
-      <Icon className="text-typography-500" as={Camera} />
-      <Icon className="text-typography-500" as={Instagram} />
-    </>
+    <Box className="flex space-x-4 items-center p-4 bg-gray-100 rounded-lg">
+      <Icon as={Camera} size="xl" className="text-blue-500" />
+      <Icon as={Instagram} className="w-8 h-8 fill-purple-600" />
+    </Box>
   );
 }
 ```
 
-## Custom Icons
+### Custom Icons
 
 Create custom icons using the createIcon function:
 
@@ -66,6 +68,6 @@ function Example() {
     ),
   });
 
-  return <Icon as={CustomIcon} size="md" />;
+  return <Icon as={CustomIcon} size="sm" />;
 }
 ```
