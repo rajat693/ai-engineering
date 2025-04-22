@@ -31,8 +31,10 @@ function Example() {
 
 size: sm | md | lg (default: md)
 
+default classNames attached for different size
+
 sm: scale-75
-md: default size
+md: scale-100
 lg: scale-125
 
 isDisabled: boolean (default: false) - When true, the switch is disabled and cannot be toggled

@@ -29,6 +29,8 @@ function Example() {
 
 orientation: horizontal | vertical (default: horizontal)
 
+default classNames attached for different orientation
+
 horizontal: h-px w-full
 vertical: w-px h-full
 

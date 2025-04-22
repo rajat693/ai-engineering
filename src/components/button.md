@@ -42,8 +42,7 @@ Shows loading state in buttons.
 
 ### ButtonGroup
 
-Container for multiple buttons with space and flexDirection props.
-RetryClaude can make mistakes. Please double-check responses.
+Container for multiple buttons with space prop flexDirection in className.
 
 ## Example
 

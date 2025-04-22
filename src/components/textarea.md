@@ -73,7 +73,7 @@ function Example() {
         </FormControlLabelText>
       </FormControlLabel>
 
-      <Textarea className="mb-1 focus-within:ring-2 focus-within:ring-blue-400 transition-all">
+      <Textarea className="mb-1 transition-all">
         <TextareaInput
           placeholder="Once upon a time..."
           className="resize-none min-h-24 text-gray-700 placeholder:text-gray-400"

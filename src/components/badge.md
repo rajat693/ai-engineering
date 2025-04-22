@@ -27,6 +27,8 @@ function Example() {
 
 action: error | warning | success | info | muted (default: muted)
 
+default classNames attached for different action
+
 error: bg-background-error border-error-300
 warning: bg-background-warning border-warning-300
 success: bg-background-success border-success-300
@@ -60,7 +62,6 @@ Inherits all the properties of React Native's Text component
 ### BadgeIcon
 
 Contains all Icon related layout style props and actions
-Inherits all the properties of gluestack Style's AsForwarder component
 
 ## Examples
 

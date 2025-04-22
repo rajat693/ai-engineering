@@ -31,7 +31,7 @@ isReadOnly: boolean (default: false)
 
 ### InputField
 
-Main text entry component with type prop (text | password).
+Main text entry component with type prop (text | password). Inherits all the properties of React Native's TextInput component.
 
 ### InputIcon
 

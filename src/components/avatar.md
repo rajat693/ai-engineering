@@ -36,6 +36,8 @@ function Example() {
 
 size: xs | sm | md | lg | xl | 2xl (default: md)
 
+default classNames attached for different size
+
 xs: w-6 h-6
 sm: w-8 h-8
 md: w-12 h-12
@@ -75,6 +77,7 @@ import {
   Avatar,
   AvatarBadge,
   AvatarFallbackText,
+  AvatarImage,
 } from "@/components/ui/avatar";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
@@ -87,6 +90,11 @@ function Example() {
       className="items-center w-full p-3 rounded-md transition-colors"
     >
       <Avatar className="bg-indigo-600 h-12 w-12 ring-2 ring-indigo-300 shadow-sm">
+        <AvatarImage
+          source={{
+            uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+          }}
+        />
         <AvatarFallbackText className="text-white font-medium">
           Ronald Richards
         </AvatarFallbackText>

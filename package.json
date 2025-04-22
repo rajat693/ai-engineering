@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@langchain/anthropic": "^0.3.18",
     "@langchain/core": "^0.3.45",
     "@langchain/openai": "^0.5.5",
     "axios": "^1.8.4",

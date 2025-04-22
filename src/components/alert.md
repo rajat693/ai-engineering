@@ -27,6 +27,8 @@ function Example() {
 
 action: error | warning | success | info | muted (default: muted)
 
+default classNames attached for different action
+
 error: bg-background-error
 warning: bg-background-warning
 success: bg-background-success
@@ -55,6 +57,8 @@ Inherits all the properties of React Native's Text component
 ### AlertIcon
 
 size: 2xs | xs | sm | md | lg | xl (default: md)
+
+default classNames attached for different size
 
 2xs: h-3 w-3
 xs: h-3.5 w-3.5

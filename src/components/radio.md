@@ -82,6 +82,7 @@ Support for focus management and various states (error, disabled, required)
 ## Examples
 
 ```jsx
+import React from "react";
 import { HStack } from "@/components/ui/hstack";
 import {
   Radio,
@@ -91,7 +92,6 @@ import {
   RadioIcon,
 } from "@/components/ui/radio";
 import { CircleIcon } from "@/components/ui/icon";
-import React from "react";
 
 function App() {
   const [values, setValues] = React.useState("Cash On Delivery");

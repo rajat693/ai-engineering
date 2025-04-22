@@ -29,6 +29,8 @@ function Example() {
 
 size: 2xs | xs | sm | md | lg | xl | 2xl | full | none (default: md)
 
+default classNames attached for different size
+
 2xs: h-6 w-6
 xs: h-10 w-10
 sm: h-16 w-16

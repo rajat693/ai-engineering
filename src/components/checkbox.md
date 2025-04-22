@@ -33,6 +33,7 @@ function Example() {
 ### Checkbox
 
 - **size**: sm | md | lg (default: md)
+  default classNames attached for different size
   - sm: gap-1.5
   - md: gap-2
   - lg: gap-2

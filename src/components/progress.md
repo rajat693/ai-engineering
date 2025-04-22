@@ -29,6 +29,7 @@ function Example() {
 size: xs | sm | md | lg | xl | 2xl (default: md)
 
 Horizontal sizes (height):
+default classNames attached for different size
 
 xs: h-1
 sm: h-2
@@ -38,6 +39,7 @@ xl: h-5
 2xl: h-6
 
 Vertical sizes (width):
+default classNames attached for different size
 
 xs: w-1
 sm: w-2

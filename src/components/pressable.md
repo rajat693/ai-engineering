@@ -28,6 +28,7 @@ function Example() {
 ### Pressable
 
 Inherits all the properties of React Native's Pressable component.
+
 Supports data attributes for state-based styling:
 
 data-disabled: true | false
