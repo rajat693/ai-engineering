@@ -5,7 +5,7 @@ description: A scalable icon component for React Native and web applications wit
 
 # Icon
 
-A scalable icon component for React Native and web applications with built-in icons collection.
+A scalable icon component for React Native and web applications with built-in icons collection and classNames for styling.
 
 ```jsx
 import { Icon, EditIcon } from "@/components/ui/icon";
@@ -15,11 +15,43 @@ function Example() {
 }
 ```
 
-# Props
+## Props
 
-size: 2xs | xs | sm | md | lg | xl (default: md)
-as: Required prop to specify which icon to display
-All SVG props are supported
+- **size**: `2xs` | `xs` | `sm` | `md` | `lg` | `xl` (default: `md`)
+- **as**: Required prop to specify which icon to display
+- All SVG props are supported
+
+## Default Styling
+
+<!-- BASE_STYLE_START -->
+
+The Icon component uses the following base styling by default:
+
+```css
+/* Base styling applied to all Icon components */
+text-typography-950 fill-none pointer-events-none
+```
+
+<!-- BASE_STYLE_END -->
+
+### Default Variant Styling
+
+<!-- VARIANT_STYLES_START -->
+
+```json
+{
+  "size": {
+    "2xs": "h-3 w-3",
+    "xs": "h-3.5 w-3.5",
+    "sm": "h-4 w-4",
+    "md": "h-[18px] w-[18px]",
+    "lg": "h-5 w-5",
+    "xl": "h-6 w-6"
+  }
+}
+```
+
+<!-- VARIANT_STYLES_END -->
 
 ## Built-in Icons
 
@@ -28,7 +60,7 @@ AddIcon, AlertCircleIcon, ArrowUpIcon, ArrowDownIcon, ArrowRightIcon, ArrowLeftI
 
 Note: For icons not available in the built-in collection, you can import them directly from 'lucide-react-native'.
 
-## Example
+## Examples
 
 ### Usage with Lucide Icons
 

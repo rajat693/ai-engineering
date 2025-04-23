@@ -1,11 +1,11 @@
 ---
 title: Pressable
-description: A touchable component for React & React Native that responds to various interaction states.
+description: Touchable component with interaction states and React Native properties.
 ---
 
 # Pressable
 
-A touchable component for React & React Native that responds to various interaction states.
+A touchable component for React & React Native that responds to various interaction states. Inherits all React Native `Pressable` component properties and accepts only className for styling.
 
 ```jsx
 import { Pressable } from "@/components/ui/pressable";
@@ -23,32 +23,15 @@ function Example() {
 }
 ```
 
-## Props
+## Default Styling
 
-### Pressable
+<!-- BASE_STYLE_START -->
 
-Inherits all the properties of React Native's Pressable component.
+The Pressable component uses the following base styling by default:
 
-Supports data attributes for state-based styling:
-
-data-disabled: true | false
-data-focus-visible: true | false
-
-## Examples
-
-```jsx
-import { Pressable } from "@/components/ui/pressable";
-import { Text } from "@/components/ui/text";
-
-function Example() {
-  return (
-    <Pressable className="p-16 bg-primary-500">
-      {({ pressed }) => (
-        <Text className={pressed ? "text-pink-400" : "text-amber-400"}>
-          PRESSABLE
-        </Text>
-      )}
-    </Pressable>
-  );
-}
+```css
+/* Base styling applied to all Pressable components */
+data-[focus-visible=true]:outline-none data-[focus-visible=true]:ring-indicator-info data-[focus-visible=true]:ring-2 data-[disabled=true]:opacity-40
 ```
+
+<!-- BASE_STYLE_END -->

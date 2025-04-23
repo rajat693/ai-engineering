@@ -5,7 +5,7 @@ description: A separator component for React & React Native that visually separa
 
 # Divider
 
-A separator component for React & React Native that visually separates content in a layout.
+A separator component for React & React Native that visually separates content in a layout. Inherits all the properties of `View` React Native component and className for styling.
 
 ```jsx
 import { Center } from "@/components/ui/center";
@@ -25,16 +25,35 @@ function Example() {
 
 ## Props
 
-### Divider
+- **orientation**: `horizontal` | `vertical` (default: `horizontal`)
 
-orientation: horizontal | vertical (default: horizontal)
+## Default Styling
 
-default classNames attached for different orientation
+<!-- BASE_STYLE_START -->
 
-horizontal: h-px w-full
-vertical: w-px h-full
+The Divider component uses the following base styling by default:
 
-Inherits all the properties of React Native's View component
+```css
+/* Base styling applied to all Divider components */
+bg-background-200
+```
+
+<!-- BASE_STYLE_END -->
+
+### Default Variant Styling
+
+<!-- VARIANT_STYLES_START -->
+
+```json
+{
+  "orientation": {
+    "vertical": "w-px h-full",
+    "horizontal": "h-px w-full"
+  }
+}
+```
+
+<!-- VARIANT_STYLES_END -->
 
 ## Examples
 
@@ -50,17 +69,17 @@ function Example() {
     <VStack>
       <Heading>gluestack-ui</Heading>
       <Text>Universal component library</Text>
-      <Divider className="my-2  bg-indigo-500" />
+      <Divider className="my-2 bg-indigo-500" />
       <HStack className="">
         <Text>Installation</Text>
         <Divider
           orientation="vertical"
-          className="mx-2 h-[20px]  bg-emerald-500"
+          className="mx-2 h-[20px] bg-emerald-500"
         />
         <Text>API Reference</Text>
         <Divider
           orientation="vertical"
-          className="mx-2 h-[20px]  bg-emerald-500"
+          className="mx-2 h-[20px] bg-emerald-500"
         />
         <Text>Examples</Text>
       </HStack>

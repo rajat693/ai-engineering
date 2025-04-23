@@ -1,11 +1,11 @@
 ---
 title: Center
-description: A layout component for React & React Native that centers its children horizontally and vertically.
+description: Centers children horizontally and vertically. Renders as `<div>` on web and `<View>` on native and inherits all their properties.
 ---
 
 # Center
 
-A layout component for React & React Native that centers its children horizontally and vertically.
+Centers children horizontally and vertically. Renders as `<div>` on web and `<View>` on native and inherits all their properties and className for styling.
 
 ```jsx
 import { Center } from "@/components/ui/center";
@@ -20,9 +20,18 @@ function Example() {
 }
 ```
 
-## Props
+## Default Styling
 
-### Center
+<!-- BASE_STYLE_START -->
 
-Renders a <div> on web and a <View> on native
-Inherits all the properties of React Native's View component
+The Center component uses the following base styling by default:
+
+```css
+/* Base styling applied to all Center components */
+justify-center items-center
+
+/* Additional web-specific styling */
+flex flex-col relative z-0
+```
+
+<!-- BASE_STYLE_END -->

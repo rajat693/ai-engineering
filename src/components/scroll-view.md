@@ -5,7 +5,7 @@ description: A scrollable container component for React & React Native applicati
 
 # ScrollView
 
-A scrollable container component for React & React Native applications.
+A scrollable container component for React & React Native applications. Inherits all React Native `ScrollView` component properties and className for styling.
 
 ```jsx
 import { ScrollView } from "@/components/ui/scroll-view";

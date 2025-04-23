@@ -5,7 +5,7 @@ description: A flexible input component with validation and styling options.
 
 # Input
 
-A flexible input component with validation and styling options.
+A flexible input component with validation and styling options. Inherits all properties of React Native's View component with className styling support.
 
 ```jsx
 import { Input, InputField } from "@/components/ui/input";
@@ -23,94 +23,180 @@ function Example() {
 
 ### Input
 
-variant: underlined | outline | rounded (default: outline)
-size: sm | md | lg | xl (default: md)
-isInvalid: boolean (default: false)
-isDisabled: boolean (default: false)
-isReadOnly: boolean (default: false)
+- **variant**: `underlined` | `outline` | `rounded` (default: `outline`)
+- **size**: `sm` | `md` | `lg` | `xl` (default: `md`)
+- **isInvalid**: boolean (default: `false`)
+- **isDisabled**: boolean (default: `false`)
+- **isReadOnly**: boolean (default: `false`)
 
 ### InputField
 
-Main text entry component with type prop (text | password). Inherits all the properties of React Native's TextInput component.
+Main text entry component with type prop (`text` | `password`). Inherits all the properties of React Native's TextInput component.
 
 ### InputIcon
 
-For adding icons inside inputs.
+For adding icons inside inputs. Inherits all the properties of gluestack Style's AsForwarder component.
 
 ### InputSlot
 
-Container for buttons or icons within inputs.
+Container for buttons or icons within inputs. Inherits all the properties of React Native's Pressable component.
 
-## Example
+## Default Styling
+
+### Input
+
+<!-- BASE_STYLE_START -->
+
+The Input component uses the following base styling by default:
+
+```css
+/* Base styling applied to all Input components */
+border-background-300 flex-row overflow-hidden content-center data-[hover=true]:border-outline-400 data-[focus=true]:border-primary-700 data-[focus=true]:hover:border-primary-700 data-[disabled=true]:opacity-40 data-[disabled=true]:hover:border-background-300 items-center
+```
+
+<!-- BASE_STYLE_END -->
+
+### Default Variant Styling
+
+<!-- VARIANT_STYLES_START -->
+
+```json
+{
+  "size": {
+    "xl": "h-12",
+    "lg": "h-11",
+    "md": "h-10",
+    "sm": "h-9"
+  },
+  "variant": {
+    "underlined": "rounded-none border-b data-[invalid=true]:border-b-2 data-[invalid=true]:border-error-700 data-[invalid=true]:hover:border-error-700 data-[invalid=true]:data-[focus=true]:border-error-700 data-[invalid=true]:data-[focus=true]:hover:border-error-700 data-[invalid=true]:data-[disabled=true]:hover:border-error-700",
+    "outline": "rounded border data-[invalid=true]:border-error-700 data-[invalid=true]:hover:border-error-700 data-[invalid=true]:data-[focus=true]:border-error-700 data-[invalid=true]:data-[focus=true]:hover:border-error-700 data-[invalid=true]:data-[disabled=true]:hover:border-error-700 data-[focus=true]:web:ring-1 data-[focus=true]:web:ring-inset data-[focus=true]:web:ring-indicator-primary data-[invalid=true]:web:ring-1 data-[invalid=true]:web:ring-inset data-[invalid=true]:web:ring-indicator-error data-[invalid=true]:data-[focus=true]:hover:web:ring-1 data-[invalid=true]:data-[focus=true]:hover:web:ring-inset data-[invalid=true]:data-[focus=true]:hover:web:ring-indicator-error data-[invalid=true]:data-[disabled=true]:hover:web:ring-1 data-[invalid=true]:data-[disabled=true]:hover:web:ring-inset data-[invalid=true]:data-[disabled=true]:hover:web:ring-indicator-error",
+    "rounded": "rounded-full border data-[invalid=true]:border-error-700 data-[invalid=true]:hover:border-error-700 data-[invalid=true]:data-[focus=true]:border-error-700 data-[invalid=true]:data-[focus=true]:hover:border-error-700 data-[invalid=true]:data-[disabled=true]:hover:border-error-700 data-[focus=true]:web:ring-1 data-[focus=true]:web:ring-inset data-[focus=true]:web:ring-indicator-primary data-[invalid=true]:web:ring-1 data-[invalid=true]:web:ring-inset data-[invalid=true]:web:ring-indicator-error data-[invalid=true]:data-[focus=true]:hover:web:ring-1 data-[invalid=true]:data-[focus=true]:hover:web:ring-inset data-[invalid=true]:data-[focus=true]:hover:web:ring-indicator-error data-[invalid=true]:data-[disabled=true]:hover:web:ring-1 data-[invalid=true]:data-[disabled=true]:hover:web:ring-inset data-[invalid=true]:data-[disabled=true]:hover:web:ring-indicator-error"
+  }
+}
+```
+
+<!-- VARIANT_STYLES_END -->
+
+### InputField
+
+<!-- BASE_STYLE_START -->
+
+The InputField component uses the following base styling by default:
+
+```css
+/* Base styling applied to all InputField components */
+flex-1 text-typography-900 py-0 px-3 placeholder:text-typography-500 h-full ios:leading-[0px] web:cursor-text web:data-[disabled=true]:cursor-not-allowed
+```
+
+<!-- BASE_STYLE_END -->
+
+### Parent-Based Styling
+
+The styling below is applied to InputField based on the props passed to the parent Input component:
+
+```json
+{
+  "variant": {
+    "underlined": "web:outline-0 web:outline-none px-0",
+    "outline": "web:outline-0 web:outline-none",
+    "rounded": "web:outline-0 web:outline-none px-4"
+  },
+  "size": {
+    "2xs": "text-2xs",
+    "xs": "text-xs",
+    "sm": "text-sm",
+    "md": "text-base",
+    "lg": "text-lg",
+    "xl": "text-xl",
+    "2xl": "text-2xl",
+    "3xl": "text-3xl",
+    "4xl": "text-4xl",
+    "5xl": "text-5xl",
+    "6xl": "text-6xl"
+  }
+}
+```
+
+### InputIcon
+
+<!-- BASE_STYLE_START -->
+
+The InputIcon component uses the following base styling by default:
+
+```css
+/* Base styling applied to all InputIcon components */
+justify-center items-center text-typography-400 fill-none
+```
+
+<!-- BASE_STYLE_END -->
+
+### Parent-Based Styling
+
+The styling below is applied to InputIcon based on the size prop passed to the parent Input component:
+
+```json
+{
+  "size": {
+    "2xs": "h-3 w-3",
+    "xs": "h-3.5 w-3.5",
+    "sm": "h-4 w-4",
+    "md": "h-[18px] w-[18px]",
+    "lg": "h-5 w-5",
+    "xl": "h-6 w-6"
+  }
+}
+```
+
+### InputSlot
+
+<!-- BASE_STYLE_START -->
+
+The InputSlot component uses the following base styling by default:
+
+```css
+/* Base styling applied to all InputSlot components */
+justify-center items-center web:disabled:cursor-not-allowed
+```
+
+<!-- BASE_STYLE_END -->
+
+## Examples
 
 ```jsx
 import React from "react";
-import { Button, ButtonText } from "@/components/ui/button";
-import { FormControl } from "@/components/ui/form-control";
-import { Heading } from "@/components/ui/heading";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
-import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { EyeIcon, EyeOffIcon } from "@/components/ui/icon";
+import { EyeIcon, EyeOffIcon, SearchIcon } from "@/components/ui/icon";
 
-function App() {
+function Example() {
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const handleState = () => {
-    setShowPassword((showState) => {
-      return !showState;
-    });
+  const handleShowPassword = () => {
+    setShowPassword((prev) => !prev);
   };
 
   return (
-    <FormControl className="p-6 border rounded-lg border-outline-300 shadow-md bg-white max-w-md mx-auto">
-      <VStack space="xl" className="w-full">
-        <Heading className="text-2xl font-bold text-typography-900 mb-2">
-          Login
-        </Heading>
+    <VStack space="xl" className="w-full max-w-md">
+      {/* Input with icon */}
+      <Input variant="underlined">
+        <InputSlot className="pl-3">
+          <InputIcon as={SearchIcon} />
+        </InputSlot>
+        <InputField placeholder="Search..." />
+      </Input>
 
-        <VStack space="xs" className="w-full">
-          <Text className="text-sm font-medium text-typography-500">Email</Text>
-          <Input className="min-w-[250px] data-[focus=true]:border-primary-500 transition-colors duration-200">
-            <InputField
-              type="text"
-              className="placeholder:text-typography-400"
-              placeholder="Enter your email"
-            />
-          </Input>
-        </VStack>
-
-        <VStack space="xs" className="w-full">
-          <Text className="text-sm font-medium text-typography-500">
-            Password
-          </Text>
-          <Input className="border-outline-300 data-[focus=true]:border-primary-500 transition-colors duration-200">
-            <InputField
-              type={showPassword ? "text" : "password"}
-              className="placeholder:text-typography-400"
-              placeholder="Enter your password"
-            />
-            <InputSlot className="pr-3" onPress={handleState}>
-              <InputIcon
-                as={showPassword ? EyeIcon : EyeOffIcon}
-                className="text-typography-500 w-5 h-5"
-              />
-            </InputSlot>
-          </Input>
-        </VStack>
-
-        <Button
-          className="ml-auto bg-primary-600 data-[hover=true]:bg-primary-700 transition-colors duration-200 mt-4 px-6 py-2 rounded-md"
-          onPress={() => {
-            setShowModal(false);
-          }}
-        >
-          <ButtonText className="text-typography-0 font-medium">
-            Save
-          </ButtonText>
-        </Button>
-      </VStack>
-    </FormControl>
+      {/* Password input with toggle icon */}
+      <Input>
+        <InputField
+          type={showPassword ? "text" : "password"}
+          placeholder="Enter password"
+        />
+        <InputSlot className="pr-3" onPress={handleShowPassword}>
+          <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
+        </InputSlot>
+      </Input>
+    </VStack>
   );
 }
 ```

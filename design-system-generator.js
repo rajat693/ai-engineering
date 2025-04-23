@@ -250,10 +250,12 @@ async function main() {
       - NO external component libraries
       - NO StyleSheet or styles objects - use ONLY Tailwind CSS classes
       - All components accept Tailwind CSS classes via the className prop
-      - Components should be imported individually from their respective files, not grouped together in a single import statement. 
+      - Images should be ONLY from unsplash.com - NO local images
+      - Components should be imported individually from their respective files, not grouped together in a single import statement.
       - Output ONLY the complete React component code, no explanations
       - All generated screens or components should be SCROLLABLE. Use ScrollView or a similar component from the design system to ensure content is properly scrollable.
       - All generated screens or components should be responsive and mobile-friendly (with some horizontal margin and padding).
+      - PREFER to use HStack and VStack components over Box components whenever possible
       
       OPTIMIZATION:
       - Select the minimum number of components needed
