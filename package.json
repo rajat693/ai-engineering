@@ -1,14 +1,10 @@
 {
-  "name": "ai-engineering",
+  "name": "weather-tool",
   "version": "1.0.0",
-  "main": "codegen.js",
+  "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node weather-tool.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "@langchain/anthropic": "^0.3.18",
     "@langchain/core": "^0.3.45",
