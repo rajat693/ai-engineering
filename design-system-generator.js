@@ -225,7 +225,7 @@ async function main() {
 
   // Initialize the Claude language model
   const llm = new ChatAnthropic({
-    modelName: "claude-3-opus-20240229",
+    modelName: "claude-3-5-sonnet-20240620", // Updated to Claude 3.5 Sonnet
     anthropicApiKey: process.env.ANTHROPIC_API_KEY,
     temperature: 0,
     maxTokens: 4000, // Increase max tokens
