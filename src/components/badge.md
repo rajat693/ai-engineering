@@ -1,11 +1,11 @@
 ---
 title: Badge
-description: A status indicator component for React & React Native that highlights information or status.
+description: Status indicator component that highlights information with React Native properties.
 ---
 
 # Badge
 
-A status indicator component for React & React Native that highlights information or status.
+A status indicator component for React & React Native that highlights information or status. Inherits all properties of React Native's View component with className styling support.
 
 ```jsx
 import { Badge, BadgeIcon, BadgeText } from "@/components/ui/badge";
@@ -13,7 +13,7 @@ import { GlobeIcon } from "@/components/ui/icon";
 
 function Example() {
   return (
-    <Badge size="md" variant="solid" action="muted">
+    <Badge>
       <BadgeText>Verified</BadgeText>
       <BadgeIcon as={GlobeIcon} className="ml-2" />
     </Badge>
@@ -25,61 +25,193 @@ function Example() {
 
 ### Badge
 
-action: error | warning | success | info | muted (default: muted)
-
-error: bg-background-error border-error-300
-warning: bg-background-warning border-warning-300
-success: bg-background-success border-success-300
-info: bg-background-info border-info-300
-muted: bg-background-muted border-background-300
-
-variant: solid | outline (default: solid)
-
-solid: no border
-outline: adds border
-
-size: sm | md | lg (default: md)
-
-sm: smaller text size
-md: medium text size
-lg: larger text size
-
-Inherits all the properties of React Native's View component
+- **action**: `error` | `warning` | `success` | `info` | `muted` (default: `muted`)
+- **variant**: `solid` | `outline` (default: `solid`)
+- **size**: `sm` | `md` | `lg` (default: `md`)
 
 ### BadgeText
 
-isTruncated: boolean (default: false) - When true, text will be truncated if it exceeds its container
-bold: boolean (default: false) - When true, text will be bold
-underline: boolean (default: false) - When true, text will be underlined
-strikeThrough: boolean (default: false) - When true, text will have a line through it
-italic: boolean (default: false) - When true, text will be italicized
-highlight: boolean (default: false) - When true, text will have a yellow background highlight
-sub: boolean (default: false) - Sets text size to xs
-Inherits all the properties of React Native's Text component
+- **isTruncated**: boolean (default: `false`) - When true, text will be truncated if it exceeds its container
+- **bold**: boolean (default: `false`) - When true, text will be bold
+- **underline**: boolean (default: `false`) - When true, text will be underlined
+- **strikeThrough**: boolean (default: `false`) - When true, text will have a line through it
+- **italic**: boolean (default: `false`) - When true, text will be italicized
+- **highlight**: boolean (default: `false`) - When true, text will have a yellow background highlight
+- **sub**: boolean (default: `false`) - Sets text size to xs
+
+Inherits all the properties of React Native's Text component.
 
 ### BadgeIcon
 
-Contains all Icon related layout style props and actions
-Inherits all the properties of gluestack Style's AsForwarder component
+- **as**: Required prop to specify which icon to display
+
+Contains all Icon related layout style props and actions.
+
+## Default Styling
+
+### Badge
+
+<!-- BASE_STYLE_START -->
+
+The Badge component uses the following base styling by default:
+
+```css
+/* Base styling applied to all Badge components */
+flex-row items-center rounded-sm data-[disabled=true]:opacity-50 px-2 py-1
+```
+
+<!-- BASE_STYLE_END -->
+
+### Default Variant Styling
+
+<!-- VARIANT_STYLES_START -->
+
+```json
+{
+  "action": {
+    "error": "bg-background-error border-error-300",
+    "warning": "bg-background-warning border-warning-300",
+    "success": "bg-background-success border-success-300",
+    "info": "bg-background-info border-info-300",
+    "muted": "bg-background-muted border-background-300"
+  },
+  "variant": {
+    "solid": "",
+    "outline": "border"
+  },
+  "size": {
+    "sm": "",
+    "md": "",
+    "lg": ""
+  }
+}
+```
+
+<!-- VARIANT_STYLES_END -->
+
+### BadgeText
+
+<!-- BASE_STYLE_START -->
+
+The BadgeText component uses the following base styling by default:
+
+```css
+/* Base styling applied to all BadgeText components */
+text-typography-700 font-body font-normal tracking-normal uppercase
+```
+
+<!-- BASE_STYLE_END -->
+
+### Default Variant Styling
+
+<!-- VARIANT_STYLES_START -->
+
+```json
+{
+  "isTruncated": {
+    "true": "web:truncate"
+  },
+  "bold": {
+    "true": "font-bold"
+  },
+  "underline": {
+    "true": "underline"
+  },
+  "strikeThrough": {
+    "true": "line-through"
+  },
+  "sub": {
+    "true": "text-xs"
+  },
+  "italic": {
+    "true": "italic"
+  },
+  "highlight": {
+    "true": "bg-yellow-500"
+  }
+}
+```
+
+### Parent-Based Styling
+
+The styling below is applied to BadgeText based on the `action` and `size` props passed to the parent Badge component:
+
+```json
+{
+  "action": {
+    "error": "text-error-600",
+    "warning": "text-warning-600",
+    "success": "text-success-600",
+    "info": "text-info-600",
+    "muted": "text-background-800"
+  },
+  "size": {
+    "sm": "text-2xs",
+    "md": "text-xs",
+    "lg": "text-sm"
+  }
+}
+```
+
+<!-- VARIANT_STYLES_END -->
+
+### BadgeIcon
+
+<!-- BASE_STYLE_START -->
+
+The BadgeIcon component uses the following base styling by default:
+
+```css
+/* Base styling applied to all BadgeIcon components */
+fill-none
+```
+
+<!-- BASE_STYLE_END -->
+
+### Parent-Based Styling
+
+The styling below is applied to BadgeIcon based on the `action` and `size` props passed to the parent Badge component:
+
+```json
+{
+  "action": {
+    "error": "text-error-600",
+    "warning": "text-warning-600",
+    "success": "text-success-600",
+    "info": "text-info-600",
+    "muted": "text-background-800"
+  },
+  "size": {
+    "sm": "h-3 w-3",
+    "md": "h-3.5 w-3.5",
+    "lg": "h-4 w-4"
+  }
+}
+```
 
 ## Examples
 
 ```jsx
+import { Badge, BadgeIcon, BadgeText } from "@/components/ui/badge";
 import {
   Avatar,
   AvatarFallbackText,
   AvatarImage,
 } from "@/components/ui/avatar";
-import { Badge, BadgeIcon, BadgeText } from "@/components/ui/badge";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { BadgeCheckIcon } from "lucide-react-native";
+import {
+  BadgeCheckIcon,
+  AlertCircleIcon,
+  InfoIcon,
+  BellIcon,
+} from "lucide-react-native";
 
 function Example() {
   return (
-    <VStack space="2xl">
+    <VStack space="xl">
       <HStack space="md">
         <Avatar>
           <AvatarFallbackText>SS</AvatarFallbackText>

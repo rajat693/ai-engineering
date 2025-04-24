@@ -2,7 +2,7 @@
 const dotenv = require("dotenv");
 const fs = require("fs");
 const path = require("path");
-const { ChatOpenAI } = require("@langchain/openai");
+const { ChatAnthropic } = require("@langchain/anthropic");
 const { tool } = require("@langchain/core/tools");
 const { ChatPromptTemplate } = require("@langchain/core/prompts");
 const { createToolCallingAgent, AgentExecutor } = require("langchain/agents");
@@ -136,8 +136,8 @@ function getComponentDocs(componentName) {
  */
 async function main() {
   // Check if API key is set
-  if (!process.env.OPENAI_API_KEY) {
-    console.error("Error: OPENAI_API_KEY environment variable is not set.");
+  if (!process.env.ANTHROPIC_API_KEY) {
+    console.error("Error: ANTHROPIC_API_KEY environment variable is not set.");
     process.exit(1);
   }
 
@@ -223,10 +223,13 @@ async function main() {
     getComponentDocsTool,
   ];
 
-  // Initialize the language model
-  const llm = new ChatOpenAI({
-    temperature: 0.2,
-    model: "gpt-4", // Using GPT-4 for better code generation
+  // Initialize the Claude language model
+  const llm = new ChatAnthropic({
+    modelName: "claude-3-opus-20240229",
+    anthropicApiKey: process.env.ANTHROPIC_API_KEY,
+    temperature: 0,
+    maxTokens: 4000, // Increase max tokens
+    cache: false, // Disable any caching
   });
 
   // Enhanced prompt template with explicit component selection step
@@ -247,13 +250,19 @@ async function main() {
       - NO external component libraries
       - NO StyleSheet or styles objects - use ONLY Tailwind CSS classes
       - All components accept Tailwind CSS classes via the className prop
-      - Components should be imported individually from their respective files, not grouped together in a single import statement. 
+      - Images should be ONLY from unsplash.com - NO local images
+      - Components should be imported individually from their respective files, not grouped together in a single import statement.
       - Output ONLY the complete React component code, no explanations
+      - All generated screens or components should be SCROLLABLE. Use ScrollView or a similar component from the design system to ensure content is properly scrollable.
+      - All generated screens or components should be responsive and mobile-friendly (with some horizontal margin and padding).
+      - PREFER to use HStack and VStack components over Box components whenever possible
       
       OPTIMIZATION:
       - Select the minimum number of components needed
       - Base selection on metadata relevance to the task
-      - Only read full documentation for selected components`,
+      - Only read full documentation for selected components
+      
+      CRITICAL: You MUST generate COMPLETE and RUNNABLE code. Do not truncate or abbreviate any part of the implementation. If the component is large, focus on generating a complete, working version rather than including every possible feature.`,
     ],
     ["human", "{input}"],
     ["placeholder", "{agent_scratchpad}"],
@@ -278,6 +287,7 @@ async function main() {
     agent,
     tools,
     verbose: false, // controls whether detailed information is shown during the agent's execution.
+    maxIterations: 30, // Increase the maximum number of iterations
   });
 
   // Execute the query
@@ -289,9 +299,29 @@ async function main() {
       input: query,
     });
 
-    // Print only the output code
+    // Get the output, handling different response formats from Claude
+    let finalOutput = "";
+
+    if (typeof result.output === "string") {
+      finalOutput = result.output;
+    } else if (Array.isArray(result.output)) {
+      if (result.output[0] && result.output[0].text) {
+        finalOutput = result.output[0].text;
+      } else {
+        finalOutput = JSON.stringify(result.output);
+      }
+    } else {
+      finalOutput = JSON.stringify(result);
+    }
+
+    // Clean up any result tags or syntax that might be in the output
+    finalOutput = finalOutput.replace(/result\.output\[0\]\.text/g, "");
+    finalOutput = finalOutput.replace(/<result>|<\/result>/g, "");
+    finalOutput = finalOutput.trim();
+
+    // Print the cleaned output code
     console.log("\n=== Generated Component Code ===\n");
-    console.log(result.output);
+    console.log(finalOutput);
     console.log("\n================================\n");
   } catch (error) {
     console.error("Error generating UI from design system:", error);
@@ -300,5 +330,3 @@ async function main() {
 
 // Run the main function
 main();
-
-//node design-system-generator.js "create a login screen give me the codebase and strictly use only the design system components no html tags should be used"
