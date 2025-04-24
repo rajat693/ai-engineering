@@ -13,16 +13,16 @@ import {
   AlertDialogFooter,
   AlertDialogBody,
   AlertDialogBackdrop,
-} from "@/components/ui/alert-dialog"
-import { Button, ButtonText } from "@/components/ui/button"
-import { Heading } from "@/components/ui/heading"
-import { Text } from "@/components/ui/text"
-import React from "react"
+} from "@/components/ui/alert-dialog";
+import { Button, ButtonText } from "@/components/ui/button";
+import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
+import React from "react";
 
 function Example() {
-  const [showAlertDialog, setShowAlertDialog] = React.useState(false)
-  const handleClose = () => setShowAlertDialog(false)
-  
+  const [showAlertDialog, setShowAlertDialog] = React.useState(false);
+  const handleClose = () => setShowAlertDialog(false);
+
   return (
     <>
       <Button onPress={() => setShowAlertDialog(true)}>
@@ -58,7 +58,7 @@ function Example() {
         </AlertDialogContent>
       </AlertDialog>
     </>
-  )
+  );
 }
 ```
 
@@ -85,7 +85,7 @@ Inherits all the properties of React Native's Pressable component, created using
 
 ### AlertDialogContent
 
-Inherits all the properties of @legendapp/motion's Motion.View component. 
+Inherits all the properties of @legendapp/motion's Motion.View component.
 
 ### AlertDialogCloseButton
 
@@ -116,6 +116,7 @@ Inherits all the properties of React Native's View component.
 ## Examples
 
 ```jsx
+import React from "react";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -123,18 +124,17 @@ import {
   AlertDialogFooter,
   AlertDialogBody,
   AlertDialogBackdrop,
-} from "@/components/ui/alert-dialog"
-import { Box } from "@/components/ui/box"
-import { Button, ButtonText } from "@/components/ui/button"
-import { Heading } from "@/components/ui/heading"
-import { Text } from "@/components/ui/text"
-import { Icon, TrashIcon } from "@/components/ui/icon"
-import React from "react"
+} from "@/components/ui/alert-dialog";
+import { Box } from "@/components/ui/box";
+import { Button, ButtonText } from "@/components/ui/button";
+import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
+import { Icon, TrashIcon } from "@/components/ui/icon";
 
 function Example() {
-  const [showAlertDialog, setShowAlertDialog] = React.useState(false)
-  const handleClose = () => setShowAlertDialog(false)
-  
+  const [showAlertDialog, setShowAlertDialog] = React.useState(false);
+  const handleClose = () => setShowAlertDialog(false);
+
   return (
     <>
       <Button onPress={() => setShowAlertDialog(true)}>
@@ -177,6 +177,6 @@ function Example() {
         </AlertDialogContent>
       </AlertDialog>
     </>
-  )
+  );
 }
 ```
