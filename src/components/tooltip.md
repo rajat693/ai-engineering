@@ -71,6 +71,94 @@ Inherits all the properties of React Native's View component.
 
 Inherits all the properties of React Native's Text component.
 
+## Default Styling
+
+### Tooltip
+
+<!-- BASE_STYLE_START -->
+
+The Tooltip component uses the following base styling by default:
+
+```css
+/* Base styling applied to all Tooltip components */
+w-full h-full web:pointer-events-none
+```
+
+<!-- BASE_STYLE_END -->
+
+### TooltipContent
+
+<!-- BASE_STYLE_START -->
+
+The TooltipContent component uses the following base styling by default:
+
+```css
+/* Base styling applied to all TooltipContent components */
+py-1 px-3 rounded-sm bg-background-900 web:pointer-events-auto
+```
+
+<!-- BASE_STYLE_END -->
+
+### TooltipText
+
+<!-- BASE_STYLE_START -->
+
+The TooltipText component uses the following base styling by default:
+
+```css
+/* Base styling applied to all TooltipText components */
+font-normal tracking-normal web:select-none text-xs text-typography-50
+```
+
+<!-- BASE_STYLE_END -->
+
+### Default Variant Styling
+
+<!-- VARIANT_STYLES_START -->
+
+```json
+{
+  "isTruncated": {
+    "true": {
+      "props": "line-clamp-1 truncate"
+    }
+  },
+  "bold": {
+    "true": "font-bold"
+  },
+  "underline": {
+    "true": "underline"
+  },
+  "strikeThrough": {
+    "true": "line-through"
+  },
+  "size": {
+    "2xs": "text-2xs",
+    "xs": "text-xs",
+    "sm": "text-sm",
+    "md": "text-base",
+    "lg": "text-lg",
+    "xl": "text-xl",
+    "2xl": "text-2xl",
+    "3xl": "text-3xl",
+    "4xl": "text-4xl",
+    "5xl": "text-5xl",
+    "6xl": "text-6xl"
+  },
+  "sub": {
+    "true": "text-xs"
+  },
+  "italic": {
+    "true": "italic"
+  },
+  "highlight": {
+    "true": "bg-yellow-500"
+  }
+}
+```
+
+<!-- VARIANT_STYLES_END -->
+
 ## Accessibility
 
 - Adheres to the WAI-ARIA design pattern

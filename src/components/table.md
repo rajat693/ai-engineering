@@ -105,6 +105,133 @@ Inherits all the properties of React Native's Text component on native and HTML 
 
 Inherits all the properties of @expo/html-elements's Caption on native and HTML caption tag on web.
 
+## Default Styling
+
+### Table
+
+<!-- BASE_STYLE_START -->
+
+The Table component uses the following base styling by default:
+
+```css
+/* Base styling applied to all Table components */
+table border-collapse border-collapse w-[800px]
+```
+
+<!-- BASE_STYLE_END -->
+
+### TableHeader
+
+<!-- BASE_STYLE_START -->
+
+The TableHeader component uses the following base styling by default:
+
+```css
+/* Base styling applied to all TableHeader components */
+```
+
+<!-- BASE_STYLE_END -->
+
+### TableBody
+
+<!-- BASE_STYLE_START -->
+
+The TableBody component uses the following base styling by default:
+
+```css
+/* Base styling applied to all TableBody components */
+```
+
+<!-- BASE_STYLE_END -->
+
+### TableFooter
+
+<!-- BASE_STYLE_START -->
+
+The TableFooter component uses the following base styling by default:
+
+```css
+/* Base styling applied to all TableFooter components */
+```
+
+<!-- BASE_STYLE_END -->
+
+### TableHead
+
+<!-- BASE_STYLE_START -->
+
+The TableHead component uses the following base styling by default:
+
+```css
+/* Base styling applied to all TableHead components */
+flex-1 px-6 py-[14px] text-left font-bold text-[16px] leading-[22px] text-typography-800 font-roboto
+```
+
+<!-- BASE_STYLE_END -->
+
+### TableRow
+
+<!-- BASE_STYLE_START -->
+
+The TableRow component uses the following base styling by default:
+
+```css
+/* Base styling applied to all TableRow components */
+border-0 border-b border-solid border-outline-200 bg-background-0
+```
+
+<!-- BASE_STYLE_END -->
+
+### Default Variant Styling
+
+<!-- VARIANT_STYLES_START -->
+
+```json
+{
+  "isHeaderRow": {
+    "true": ""
+  },
+  "isFooterRow": {
+    "true": "border-b-0 "
+  }
+}
+```
+
+<!-- VARIANT_STYLES_END -->
+
+### TableData
+
+<!-- BASE_STYLE_START -->
+
+The TableData component uses the following base styling by default:
+
+```css
+/* Base styling applied to all TableData components */
+flex-1 px-6 py-[14px] text-left text-[16px] font-medium leading-[22px] text-typography-800 font-roboto
+```
+
+<!-- BASE_STYLE_END -->
+
+### TableCaption
+
+<!-- BASE_STYLE_START -->
+
+The TableCaption component uses the following base styling by default:
+
+```css
+/* Base styling applied to all TableCaption components */
+caption-bottom px-6 py-[14px] text-[16px] font-normal leading-[22px] text-typography-800 bg-background-50 font-roboto
+```
+
+On native platforms:
+
+```css
+/* Base styling applied to all TableCaption components on native */
+px-6 py-[14px] text-[16px] font-normal leading-[22px] text-typography-800 bg-background-50 font-roboto
+```
+
+<!-- BASE_STYLE_END -->
+
 ## Examples
 
 ### Striped Table
