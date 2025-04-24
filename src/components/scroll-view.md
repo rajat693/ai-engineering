@@ -13,10 +13,13 @@ import { Text } from "@/components/ui/text";
 
 function Example() {
   return (
-    <ScrollView className="h-64 bg-background-50 p-4">
-      <Text className="mb-4">Scrollable content goes here</Text>
-      <Text className="mb-4">More content to scroll</Text>
-      <Text className="mb-4">Even more content</Text>
+    <ScrollView
+      className="h-64 bg-background-50 p-4"
+      contentContainerClassName="gap-4"
+    >
+      <Text>Scrollable content goes here</Text>
+      <Text>More content to scroll</Text>
+      <Text>Even more content</Text>
     </ScrollView>
   );
 }

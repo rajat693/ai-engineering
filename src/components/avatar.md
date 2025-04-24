@@ -174,7 +174,7 @@ The AvatarImage component uses the following base styling by default:
 
 ```css
 /* Base styling applied to all AvatarImage components */
-h-full w-full rounded-full absolute
+h-full w-full rounded-full absolute z-10
 ```
 
 <!-- BASE_STYLE_END -->
