@@ -3,6 +3,8 @@ title: AlertDialog
 description: A dialog component that interrupts users with important content requiring immediate attention and action
 ---
 
+# AlertDialog
+
 AlertDialog is a modal component that interrupts users with important content requiring immediate attention and action. It provides a responsive interface for confirmations, alerts, and critical user decisions with className styling support.
 
 ```jsx
