@@ -116,6 +116,133 @@ Inherits all the properties of React Native's View component.
 
 Inherits all the properties of React Native's View component.
 
+## Default Styling
+
+### Modal
+
+<!-- BASE_STYLE_START -->
+
+The Modal component uses the following base styling by default:
+
+```css
+/* Base styling applied to all Modal components */
+group/modal w-full h-full justify-center items-center web:pointer-events-none
+```
+
+<!-- BASE_STYLE_END -->
+
+### Default Variant Styling
+
+<!-- VARIANT_STYLES_START -->
+
+```json
+{
+  "size": {
+    "xs": "",
+    "sm": "",
+    "md": "",
+    "lg": "",
+    "full": ""
+  }
+}
+```
+
+<!-- VARIANT_STYLES_END -->
+
+### ModalBackdrop
+
+<!-- BASE_STYLE_START -->
+
+The ModalBackdrop component uses the following base styling by default:
+
+```css
+/* Base styling applied to all ModalBackdrop components */
+absolute left-0 top-0 right-0 bottom-0 bg-background-dark web:cursor-default
+```
+
+<!-- BASE_STYLE_END -->
+
+### ModalContent
+
+<!-- BASE_STYLE_START -->
+
+The ModalContent component uses the following base styling by default:
+
+```css
+/* Base styling applied to all ModalContent components */
+bg-background-0 rounded-md overflow-hidden border border-outline-100 shadow-hard-2 p-6
+```
+
+<!-- BASE_STYLE_END -->
+
+### Parent-Based Styling
+
+The styling below is applied to ModalContent based on the props passed to the parent Modal component:
+
+```json
+{
+  "size": {
+    "xs": "w-[60%] max-w-[360px]",
+    "sm": "w-[70%] max-w-[420px]",
+    "md": "w-[80%] max-w-[510px]",
+    "lg": "w-[90%] max-w-[640px]",
+    "full": "w-full"
+  }
+}
+```
+
+### ModalCloseButton
+
+<!-- BASE_STYLE_START -->
+
+The ModalCloseButton component uses the following base styling by default:
+
+```css
+/* Base styling applied to all ModalCloseButton components */
+group/modal-close-button z-10 rounded data-[focus-visible=true]:web:bg-background-100 web:outline-0 cursor-pointer
+```
+
+<!-- BASE_STYLE_END -->
+
+### ModalHeader
+
+<!-- BASE_STYLE_START -->
+
+The ModalHeader component uses the following base styling by default:
+
+```css
+/* Base styling applied to all ModalHeader components */
+justify-between items-center flex-row
+```
+
+<!-- BASE_STYLE_END -->
+
+### ModalBody
+
+<!-- BASE_STYLE_START -->
+
+The ModalBody component uses the following base styling by default:
+
+```css
+/* Base styling applied to all ModalBody components */
+mt-2 mb-6
+```
+
+<!-- BASE_STYLE_END -->
+
+### ModalFooter
+
+<!-- BASE_STYLE_START -->
+
+The ModalFooter component uses the following base styling by default:
+
+```css
+/* Base styling applied to all ModalFooter components */
+flex-row justify-end items-center gap-2
+```
+
+<!-- BASE_STYLE_END -->
+
 ## Accessibility
 
 - Follows the Dialog Modal WAI-ARIA design pattern

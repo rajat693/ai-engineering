@@ -105,6 +105,130 @@ Inherits all the properties of React Native's View component.
 
 Inherits all the properties of React Native's View component.
 
+## Default Styling
+
+### AlertDialog
+
+<!-- BASE_STYLE_START -->
+
+The AlertDialog component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AlertDialog components */
+group/modal w-full h-full justify-center items-center web:pointer-events-none
+```
+
+<!-- BASE_STYLE_END -->
+
+### Parent-Based Styling
+
+The styling below is applied based on the props passed to the AlertDialog component:
+
+```json
+{
+  "size": {
+    "xs": "",
+    "sm": "",
+    "md": "",
+    "lg": "",
+    "full": ""
+  }
+}
+```
+
+### AlertDialogBackdrop
+
+<!-- BASE_STYLE_START -->
+
+The AlertDialogBackdrop component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AlertDialogBackdrop components */
+absolute left-0 top-0 right-0 bottom-0 bg-background-dark web:cursor-default
+```
+
+<!-- BASE_STYLE_END -->
+
+### AlertDialogContent
+
+<!-- BASE_STYLE_START -->
+
+The AlertDialogContent component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AlertDialogContent components */
+bg-background-0 rounded-lg overflow-hidden border border-outline-100 p-6
+```
+
+<!-- BASE_STYLE_END -->
+
+### Parent-Based Styling
+
+The styling below is applied to AlertDialogContent based on the props passed to the parent AlertDialog component:
+
+```json
+{
+  "size": {
+    "xs": "w-[60%] max-w-[360px]",
+    "sm": "w-[70%] max-w-[420px]",
+    "md": "w-[80%] max-w-[510px]",
+    "lg": "w-[90%] max-w-[640px]",
+    "full": "w-full"
+  }
+}
+```
+
+### AlertDialogCloseButton
+
+<!-- BASE_STYLE_START -->
+
+The AlertDialogCloseButton component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AlertDialogCloseButton components */
+group/alert-dialog-close-button z-10 rounded-sm p-2 data-[focus-visible=true]:bg-background-100 web:cursor-pointer outline-0
+```
+
+<!-- BASE_STYLE_END -->
+
+### AlertDialogHeader
+
+<!-- BASE_STYLE_START -->
+
+The AlertDialogHeader component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AlertDialogHeader components */
+justify-between items-center flex-row
+```
+
+<!-- BASE_STYLE_END -->
+
+### AlertDialogBody
+
+<!-- BASE_STYLE_START -->
+
+The AlertDialogBody component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AlertDialogBody components */
+```
+
+<!-- BASE_STYLE_END -->
+
+### AlertDialogFooter
+
+<!-- BASE_STYLE_START -->
+
+The AlertDialogFooter component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AlertDialogFooter components */
+flex-row justify-end items-center gap-3
+```
+
+<!-- BASE_STYLE_END -->
+
 ## Accessibility
 
 - Follows WAI-ARIA Alert and Message Dialogs Pattern

@@ -75,6 +75,48 @@ Renders a `<div />` on web and a `View` on native.
 
 Renders a `<div />` on web and a `View` on native.
 
+## Default Styling
+
+### Grid
+
+<!-- BASE_STYLE_START -->
+
+The Grid component uses the following base styling by default:
+
+```css
+/* Base styling applied to all Grid components */
+w-full grid grid-cols-12
+```
+
+On native platforms:
+
+```css
+/* Base styling applied to all Grid components on native */
+w-full box-border flex-row flex-wrap justify-start
+```
+
+<!-- BASE_STYLE_END -->
+
+### GridItem
+
+<!-- BASE_STYLE_START -->
+
+The GridItem component uses the following base styling by default:
+
+```css
+/* Base styling applied to all GridItem components */
+w-full w-auto col-span-1
+```
+
+On native platforms:
+
+```css
+/* Base styling applied to all GridItem components on native */
+w-full
+```
+
+<!-- BASE_STYLE_END -->
+
 ## Examples
 
 ```jsx

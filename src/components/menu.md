@@ -1,167 +1,154 @@
 ---
-title: Menu
-description: A user-friendly interface component designed for easy navigation and accessibility.
+title: Grid
+description: A flexible layout component for React & React Native that creates responsive grid layouts.
 ---
 
-# Menu
+# Grid
 
-Menu is a user-friendly interface component designed for easy navigation and accessibility with className styling support.
+Grid is a flexible layout component that creates responsive grid layouts for both web and native platforms with className styling support.
 
 ```jsx
-import { Button, ButtonText } from "@/components/ui/button";
-import { Menu, MenuItem, MenuItemLabel } from "@/components/ui/menu";
-import {
-  Icon,
-  AddIcon,
-  GlobeIcon,
-  PlayIcon,
-  SettingsIcon,
-} from "@/components/ui/icon";
+import { Grid, GridItem } from "@/components/ui/grid";
 
 function Example() {
   return (
-    <Menu
-      placement="top"
-      offset={5}
-      disabledKeys={["Settings"]}
-      trigger={({ ...triggerProps }) => {
-        return (
-          <Button {...triggerProps}>
-            <ButtonText>Menu</ButtonText>
-          </Button>
-        );
+    <Grid
+      className="gap-5"
+      _extra={{
+        className: "grid-cols-8",
       }}
     >
-      <MenuItem key="Add account" textValue="Add account">
-        <Icon as={AddIcon} size="sm" className="mr-2" />
-        <MenuItemLabel size="sm">Add account</MenuItemLabel>
-      </MenuItem>
-      <MenuItem key="Community" textValue="Community">
-        <Icon as={GlobeIcon} size="sm" className="mr-2" />
-        <MenuItemLabel size="sm">Community</MenuItemLabel>
-      </MenuItem>
-      <MenuItem key="Plugins" textValue="Plugins">
-        <Icon as={PlayIcon} size="sm" className="mr-2" />
-        <MenuItemLabel size="sm">Plugins</MenuItemLabel>
-      </MenuItem>
-      <MenuItem key="Settings" textValue="Settings">
-        <Icon as={SettingsIcon} size="sm" className="mr-2" />
-        <MenuItemLabel size="sm">Settings</MenuItemLabel>
-      </MenuItem>
-    </Menu>
+      <GridItem
+        className="bg-background-50 p-6 rounded-md"
+        _extra={{
+          className: "col-span-3",
+        }}
+      />
+      <GridItem
+        className="bg-background-50 p-6 rounded-md"
+        _extra={{
+          className: "col-span-5",
+        }}
+      />
+      <GridItem
+        className="bg-background-50 p-6 rounded-md"
+        _extra={{
+          className: "col-span-6",
+        }}
+      />
+      <GridItem
+        className="bg-background-50 p-6 rounded-md"
+        _extra={{
+          className: "col-span-4",
+        }}
+      />
+      <GridItem
+        className="bg-background-50 p-6 rounded-md"
+        _extra={{
+          className: "col-span-4",
+        }}
+      />
+    </Grid>
   );
 }
 ```
 
+> **Important**: Our responsive grid component is based on a 12-column grid layout. It follows the CSS grid system on the web and flexbox layout on native devices. Since grid layout is only supported on web, passing grid-cols and col-span classNames inside \_extra is recommended for the grid component to work on both web and native.
+
+> **Note**: The immediate parent of GridItem must be Grid. There should be no higher-order component (HOC) between them.
+
 ## Props
 
-### Menu
+### Grid
 
-- **placement**: `bottom` | `top` | `right` | `left` | `top left` | `top right` | `bottom left` | `bottom right` | `right top` | `right bottom` | `left top` | `left bottom` (default: `bottom left`) - Menu placement
-- **trigger**: (\_props: any, state: { open: boolean; }) => Element - Function that returns a React Element used as a trigger for the Menu
-- **defaultIsOpen**: boolean (default: `false`) - If true, the menu will be opened by default
-- **onOpen**: () => void - Function invoked when the menu is opened
-- **onClose**: () => void - Function invoked when menu is closed
-- **isOpen**: boolean (default: `false`) - Whether the menu is opened (controlled state)
-- **offset**: number - Additional offset applied along the main axis
-- **crossOffset**: number - Additional offset applied along the cross axis
-- **disabledKeys**: string[] - Item keys in this collection will be disabled
-- **closeOnSelect**: boolean (default: `true`) - Whether menu closes after an option is selected
-- **selectedKeys**: 'all' | Iterable<Key> - The currently selected keys (controlled)
-- **selectionMode**: 'none' | 'single' | 'multiple' (default: `none`) - Type of selection allowed
-- **onSelectionChange**: (keys: 'all' | Iterable<Key>) => void - Handler called when selection changes
+- **\_extra**: object - Accepts `grid-cols-*` className where \* can range from 1 to 12 (default: `grid-cols-12`)
+- **gap**: number - Sets the gap between grid items
+- **rowGap**: number - Sets the gap between rows
+- **columnGap**: number - Sets the gap between columns
+- **flexDirection**: `row` | `column` | `row-reverse` | `column-reverse` - Sets the flex direction
 
-Inherits all the properties of React Native's View component.
+Renders a `<div />` on web and a `View` on native.
 
-### MenuItem
+### GridItem
 
-- **closeOnSelect**: boolean (default: `true`) - Whether menu closes after this option is selected
+- **\_extra**: object - Accepts `col-span-*` className where \* can range from 1 to 12 (default: `col-span-1`)
 
-Inherits all the properties of React Native's Pressable component.
+Renders a `<div />` on web and a `View` on native.
 
-### MenuItemLabel
+## Default Styling
 
-- **size**: `2xs` | `xs` | `sm` | `md` | `lg` | `xl` | `2xl` | `3xl` | `4xl` | `5xl` | `6xl` (default: `md`)
-- **isTruncated**: boolean - When true, text will be truncated
-- **bold**: boolean - When true, text will be bold
-- **underline**: boolean - When true, text will be underlined
-- **strikeThrough**: boolean - When true, text will have a line through it
-- **italic**: boolean - When true, text will be italicized
-- **highlight**: boolean - When true, text will have a yellow background highlight
-- **sub**: boolean - Sets text size to xs
+### Grid
 
-Inherits all the properties of React Native's Text component.
+<!-- BASE_STYLE_START -->
 
-### MenuSeparator
+The Grid component uses the following base styling by default:
 
-Inherits all the properties of React Native's View component.
+```css
+/* Base styling applied to all Grid components */
+w-full grid grid-cols-12
+```
 
-## Accessibility
+On native platforms:
 
-- Adheres to the MENU WAI-ARIA design pattern
-- Keyboard support:
-  - **Space/Enter**: Opens/closes the menu
-  - **Arrow Down**: Moves focus to the next focusable element
-  - **Arrow Up**: Moves focus to the previous focusable element
-  - **Esc**: Closes the menu and moves focus to menuTrigger
-- Screen Reader support with appropriate ARIA labels
+```css
+/* Base styling applied to all Grid components on native */
+w-full box-border flex-row flex-wrap justify-start
+```
+
+<!-- BASE_STYLE_END -->
+
+### GridItem
+
+<!-- BASE_STYLE_START -->
+
+The GridItem component uses the following base styling by default:
+
+```css
+/* Base styling applied to all GridItem components */
+w-full w-auto col-span-1
+```
+
+On native platforms:
+
+```css
+/* Base styling applied to all GridItem components on native */
+w-full
+```
+
+<!-- BASE_STYLE_END -->
 
 ## Examples
 
 ```jsx
-import { Badge, BadgeText } from "@/components/ui/badge";
-import { Button, ButtonIcon } from "@/components/ui/button";
-import {
-  Menu,
-  MenuItem,
-  MenuItemLabel,
-  MenuSeparator,
-} from "@/components/ui/menu";
-import { MenuIcon } from "@/components/ui/icon";
+import { Grid, GridItem } from "@/components/ui/grid";
+import { Text } from "@/components/ui/text";
 
 function Example() {
   return (
-    <Menu
-      offset={5}
-      trigger={({ ...triggerProps }) => {
-        return (
-          <Button {...triggerProps} size="sm">
-            <ButtonIcon as={MenuIcon} />
-          </Button>
-        );
+    <Grid
+      className="gap-y-2 gap-x-4"
+      _extra={{
+        className: "grid-cols-6",
       }}
     >
-      <MenuItem
-        key="Membership"
-        textValue="Membership"
-        className="p-2 justify-between"
+      <GridItem
+        className="bg-background-50 p-4 rounded-md text-center"
+        _extra={{
+          className: "col-span-2",
+        }}
       >
-        <MenuItemLabel size="sm">Membership</MenuItemLabel>
-        <Badge action="success" className="rounded-full">
-          <BadgeText className="text-2xs capitalize">Pro</BadgeText>
-        </Badge>
-      </MenuItem>
-      <MenuItem key="Orders" textValue="Orders" className="p-2">
-        <MenuItemLabel size="sm">Orders</MenuItemLabel>
-      </MenuItem>
-      <MenuItem key="Address Book" textValue="Address Book" className="p-2">
-        <MenuItemLabel size="sm">Address Book</MenuItemLabel>
-      </MenuItem>
-      <MenuSeparator />
-      <MenuItem key="Earn & Redeem" textValue="Earn & Redeem" className="p-2">
-        <MenuItemLabel size="sm">Earn & Redeem</MenuItemLabel>
-      </MenuItem>
-      <MenuItem key="Coupons" textValue="Coupons" className="p-2">
-        <MenuItemLabel size="sm">Coupons</MenuItemLabel>
-      </MenuItem>
-      <MenuItem key="Help Center" textValue="Help Center" className="p-2">
-        <MenuItemLabel size="sm">Help Center</MenuItemLabel>
-      </MenuItem>
-      <MenuSeparator />
-      <MenuItem key="Logout" textValue="Logout" className="p-2">
-        <MenuItemLabel size="sm">Logout</MenuItemLabel>
-      </MenuItem>
-    </Menu>
+        <Text className="text-sm">01</Text>
+      </GridItem>
+      <GridItem
+        className="bg-background-50 p-4 rounded-md text-center"
+        _extra={{
+          className: "col-span-2",
+        }}
+      >
+        <Text className="text-sm">02</Text>
+      </GridItem>
+      {/* Additional grid items */}
+    </Grid>
   );
 }
 ```

@@ -136,6 +136,189 @@ Inherits all the properties of React Native's View component.
 
 Inherits all the properties of React Native's Text component.
 
+## Default Styling
+
+### Accordion
+
+<!-- BASE_STYLE_START -->
+
+The Accordion component uses the following base styling by default:
+
+```css
+/* Base styling applied to all Accordion components */
+w-full
+```
+
+<!-- BASE_STYLE_END -->
+
+### Default Variant Styling
+
+<!-- VARIANT_STYLES_START -->
+
+```json
+{
+  "variant": {
+    "filled": "bg-white shadow-hard-2",
+    "unfilled": ""
+  },
+  "size": {
+    "sm": "",
+    "md": "",
+    "lg": ""
+  }
+}
+```
+
+<!-- VARIANT_STYLES_END -->
+
+### AccordionItem
+
+<!-- BASE_STYLE_START -->
+
+The AccordionItem component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AccordionItem components */
+```
+
+<!-- BASE_STYLE_END -->
+
+### Parent-Based Styling
+
+The styling below is applied to AccordionItem based on the props passed to the parent Accordion component:
+
+```json
+{
+  "variant": {
+    "filled": "bg-background-0",
+    "unfilled": "bg-transparent"
+  }
+}
+```
+
+### AccordionHeader
+
+<!-- BASE_STYLE_START -->
+
+The AccordionHeader component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AccordionHeader components */
+mx-0 my-0
+```
+
+<!-- BASE_STYLE_END -->
+
+### AccordionTrigger
+
+<!-- BASE_STYLE_START -->
+
+The AccordionTrigger component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AccordionTrigger components */
+w-full flex-row justify-between items-center web:outline-none focus:outline-none data-[disabled=true]:opacity-40 data-[disabled=true]:cursor-not-allowed data-[focus-visible=true]:bg-background-50 py-3 px-4
+```
+
+<!-- BASE_STYLE_END -->
+
+### AccordionTitleText
+
+<!-- BASE_STYLE_START -->
+
+The AccordionTitleText component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AccordionTitleText components */
+text-typography-900 font-bold flex-1 text-left
+```
+
+<!-- BASE_STYLE_END -->
+
+### Parent-Based Styling
+
+The styling below is applied to AccordionTitleText based on the props passed to the parent Accordion component:
+
+```json
+{
+  "size": {
+    "sm": "text-sm",
+    "md": "text-base",
+    "lg": "text-lg"
+  }
+}
+```
+
+### AccordionIcon
+
+<!-- BASE_STYLE_START -->
+
+The AccordionIcon component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AccordionIcon components */
+text-typography-900 fill-none
+```
+
+<!-- BASE_STYLE_END -->
+
+### Parent-Based Styling
+
+The styling below is applied to AccordionIcon based on the props passed to the parent Accordion component:
+
+```json
+{
+  "size": {
+    "2xs": "h-3 w-3",
+    "xs": "h-3.5 w-3.5",
+    "sm": "h-4 w-4",
+    "md": "h-[18px] w-[18px]",
+    "lg": "h-5 w-5",
+    "xl": "h-6 w-6"
+  }
+}
+```
+
+### AccordionContent
+
+<!-- BASE_STYLE_START -->
+
+The AccordionContent component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AccordionContent components */
+pt-1 pb-3 px-4
+```
+
+<!-- BASE_STYLE_END -->
+
+### AccordionContentText
+
+<!-- BASE_STYLE_START -->
+
+The AccordionContentText component uses the following base styling by default:
+
+```css
+/* Base styling applied to all AccordionContentText components */
+text-typography-700 font-normal
+```
+
+<!-- BASE_STYLE_END -->
+
+### Parent-Based Styling
+
+The styling below is applied to AccordionContentText based on the props passed to the parent Accordion component:
+
+```json
+{
+  "size": {
+    "sm": "text-sm",
+    "md": "text-base",
+    "lg": "text-lg"
+  }
+}
+```
+
 ## Accessibility
 
 - Adheres to the Accordion WAI-ARIA design pattern

@@ -110,6 +110,170 @@ Inherits all the properties of React Native's View component.
 
 Inherits all the properties of React Native's Pressable component.
 
+## Default Styling
+
+### Popover
+
+<!-- BASE_STYLE_START -->
+
+The Popover component uses the following base styling by default:
+
+```css
+/* Base styling applied to all Popover components */
+group/popover w-full h-full justify-center items-center web:pointer-events-none
+```
+
+<!-- BASE_STYLE_END -->
+
+### Default Variant Styling
+
+<!-- VARIANT_STYLES_START -->
+
+```json
+{
+  "size": {
+    "xs": "",
+    "sm": "",
+    "md": "",
+    "lg": "",
+    "full": ""
+  }
+}
+```
+
+<!-- VARIANT_STYLES_END -->
+
+### PopoverBackdrop
+
+<!-- BASE_STYLE_START -->
+
+The PopoverBackdrop component uses the following base styling by default:
+
+```css
+/* Base styling applied to all PopoverBackdrop components */
+absolute left-0 top-0 right-0 bottom-0 web:cursor-default
+```
+
+<!-- BASE_STYLE_END -->
+
+### PopoverContent
+
+<!-- BASE_STYLE_START -->
+
+The PopoverContent component uses the following base styling by default:
+
+```css
+/* Base styling applied to all PopoverContent components */
+bg-background-0 rounded-lg overflow-hidden border border-outline-100 w-full
+```
+
+<!-- BASE_STYLE_END -->
+
+### Parent-Based Styling
+
+The styling below is applied to PopoverContent based on the props passed to the parent Popover component:
+
+```json
+{
+  "size": {
+    "xs": "max-w-[360px] p-3.5",
+    "sm": "max-w-[420px] p-4",
+    "md": "max-w-[510px] p-[18px]",
+    "lg": "max-w-[640px] p-5",
+    "full": "p-6"
+  }
+}
+```
+
+### PopoverArrow
+
+<!-- BASE_STYLE_START -->
+
+The PopoverArrow component uses the following base styling by default:
+
+```css
+/* Base styling applied to all PopoverArrow components */
+bg-background-0 z-[1] border absolute overflow-hidden h-3.5 w-3.5 border-outline-100
+```
+
+<!-- BASE_STYLE_END -->
+
+### Default Variant Styling
+
+<!-- VARIANT_STYLES_START -->
+
+```json
+{
+  "placement": {
+    "top left": "data-[flip=false]:border-t-0 data-[flip=false]:border-l-0 data-[flip=true]:border-b-0 data-[flip=true]:border-r-0",
+    "top": "data-[flip=false]:border-t-0 data-[flip=false]:border-l-0 data-[flip=true]:border-b-0 data-[flip=true]:border-r-0",
+    "top right": "data-[flip=false]:border-t-0 data-[flip=false]:border-l-0 data-[flip=true]:border-b-0 data-[flip=true]:border-r-0",
+    "bottom": "data-[flip=false]:border-b-0 data-[flip=false]:border-r-0 data-[flip=true]:border-t-0 data-[flip=true]:border-l-0",
+    "bottom left": "data-[flip=false]:border-b-0 data-[flip=false]:border-r-0 data-[flip=true]:border-t-0 data-[flip=true]:border-l-0",
+    "bottom right": "data-[flip=false]:border-b-0 data-[flip=false]:border-r-0 data-[flip=true]:border-t-0 data-[flip=true]:border-l-0",
+    "left": "data-[flip=false]:border-l-0 data-[flip=false]:border-b-0 data-[flip=true]:border-r-0 data-[flip=true]:border-t-0",
+    "left top": "data-[flip=false]:border-l-0 data-[flip=false]:border-b-0 data-[flip=true]:border-r-0 data-[flip=true]:border-t-0",
+    "left bottom": "data-[flip=false]:border-l-0 data-[flip=false]:border-b-0 data-[flip=true]:border-r-0 data-[flip=true]:border-t-0",
+    "right": "data-[flip=false]:border-r-0 data-[flip=false]:border-t-0 data-[flip=true]:border-l-0 data-[flip=true]:border-b-0",
+    "right top": "data-[flip=false]:border-r-0 data-[flip=false]:border-t-0 data-[flip=true]:border-l-0 data-[flip=true]:border-b-0",
+    "right bottom": "data-[flip=false]:border-r-0 data-[flip=false]:border-t-0 data-[flip=true]:border-l-0 data-[flip=true]:border-b-0"
+  }
+}
+```
+
+<!-- VARIANT_STYLES_END -->
+
+### PopoverCloseButton
+
+<!-- BASE_STYLE_START -->
+
+The PopoverCloseButton component uses the following base styling by default:
+
+```css
+/* Base styling applied to all PopoverCloseButton components */
+group/popover-close-button z-[1] rounded-sm data-[focus-visible=true]:web:bg-background-100 web:outline-0 web:cursor-pointer
+```
+
+<!-- BASE_STYLE_END -->
+
+### PopoverHeader
+
+<!-- BASE_STYLE_START -->
+
+The PopoverHeader component uses the following base styling by default:
+
+```css
+/* Base styling applied to all PopoverHeader components */
+flex-row justify-between items-center
+```
+
+<!-- BASE_STYLE_END -->
+
+### PopoverBody
+
+<!-- BASE_STYLE_START -->
+
+The PopoverBody component uses the following base styling by default:
+
+```css
+/* Base styling applied to all PopoverBody components */
+```
+
+<!-- BASE_STYLE_END -->
+
+### PopoverFooter
+
+<!-- BASE_STYLE_START -->
+
+The PopoverFooter component uses the following base styling by default:
+
+```css
+/* Base styling applied to all PopoverFooter components */
+flex-row justify-between items-center
+```
+
+<!-- BASE_STYLE_END -->
+
 ## Accessibility
 
 - Adheres to the Dialog WAI-ARIA design pattern
