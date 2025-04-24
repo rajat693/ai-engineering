@@ -12,7 +12,7 @@ import { Input, InputField } from "@/components/ui/input";
 
 function Example() {
   return (
-    <Input variant="outline" size="md">
+    <Input>
       <InputField placeholder="Enter text here..." />
     </Input>
   );
