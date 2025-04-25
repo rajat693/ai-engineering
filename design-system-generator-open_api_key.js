@@ -279,7 +279,7 @@ async function main() {
       client: langSmithClient,
       metadata: {
         environment: process.env.NODE_ENV || "development",
-        model: "gpt-4-0125-preview",
+        model: "gpt-4o-mini",
         timestamp: new Date().toISOString(),
         version: "1.0.0",
       },
@@ -290,7 +290,7 @@ async function main() {
   // Initialize the language model with LangSmith callbacks
   const llm = new ChatOpenAI({
     temperature: 0.2,
-    model: "gpt-4-0125-preview",
+    model: "gpt-4o-mini",
     callbacks: callbacks,
   });
 
@@ -346,12 +346,12 @@ async function main() {
     callbacks: callbacks,
     tags: [
       "design-system-generator-open",
-      "openai-gpt4-turbo",
+      "gpt-4o-mini",
       `query-${Date.now()}`,
     ],
     metadata: {
       environment: process.env.NODE_ENV || "development",
-      model: "gpt-4-0125-preview",
+      model: "gpt-4o-mini",
       version: "1.0.0",
     },
   });
@@ -394,7 +394,7 @@ async function main() {
         inputs: { type: "usage_metrics" },
         outputs: {
           query_count: 1,
-          model: "gpt-4-0125-preview",
+          model: "gpt-4o-mini",
           timestamp: new Date().toISOString(),
           components_used: availableComponents.length,
         },
