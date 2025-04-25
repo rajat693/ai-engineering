@@ -169,6 +169,22 @@ function getComponentDocs(componentName) {
   }
 }
 
+function getThemeConfiguration() {
+  try {
+    // Path to your theme config file
+    const themePath = path.join("./src/theme.md");
+
+    if (!fs.existsSync(themePath)) {
+      return "Theme configuration not found";
+    }
+
+    const themeContent = fs.readFileSync(themePath, "utf-8");
+    return themeContent;
+  } catch (error) {
+    return `Error retrieving theme configuration: ${error.message}`;
+  }
+}
+
 /**
  * Main function to run the design system generator
  */
@@ -262,10 +278,25 @@ async function main() {
     }
   );
 
+  const getThemeConfigTool = tool(
+    async () => {
+      console.log("📚 Reading theme configuration...");
+      return getThemeConfiguration();
+    },
+    {
+      name: "get_theme_config",
+      description:
+        "Gets the theme configuration including color variables and design tokens.",
+      schema: z.object({}),
+    }
+  );
+
+  // Add this to your tools array
   const tools = [
     getComponentMetadataTool,
     selectComponentsTool,
     getComponentDocsTool,
+    getThemeConfigTool, // Add this line
   ];
 
   // Check LangSmith connection before proceeding
@@ -302,12 +333,14 @@ async function main() {
       
       STRICT WORKFLOW (follow in order):
       1. Use the get_component_metadata tool to see titles and descriptions
-      2. Use the select_components tool to explicitly select which components you need
-      3. Use get_component_docs tool ONLY for the components you selected
-      4. Generate the React component code
+      2. Use the get_theme_config tool to understand available color variables
+      3. Use the select_components tool to explicitly select which components you need
+      4. Use get_component_docs tool ONLY for the components you selected
+      5. Generate the React component code
       
       REQUIREMENTS:
       - Use ONLY components from the documented design system
+      - Use the theme's color system for styling via Tailwind classes (e.g., bg-primary-500, text-typography-900)
       - NO HTML tags like <div>, <button>, <input>, etc.
       - NO external component libraries
       - NO StyleSheet or styles objects - use ONLY Tailwind CSS classes
