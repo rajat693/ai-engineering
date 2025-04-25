@@ -2,7 +2,7 @@
 const dotenv = require("dotenv");
 const fs = require("fs");
 const path = require("path");
-const { ChatAnthropic } = require("@langchain/anthropic");
+const { ChatOpenAI } = require("@langchain/openai");
 const { tool } = require("@langchain/core/tools");
 const { ChatPromptTemplate } = require("@langchain/core/prompts");
 const { createToolCallingAgent, AgentExecutor } = require("langchain/agents");
@@ -23,7 +23,7 @@ const LANGSMITH_API_KEY = process.env.LANGSMITH_API_KEY;
 const LANGSMITH_PROJECT =
   process.env.LANGSMITH_PROJECT || "design-system-generator";
 
-// Initialize LangSmith client with better error handling
+// Initialize LangSmith client
 const langSmithClient = new Client({
   apiUrl: LANGSMITH_ENDPOINT,
   apiKey: LANGSMITH_API_KEY,
@@ -174,8 +174,8 @@ function getComponentDocs(componentName) {
  */
 async function main() {
   // Check if API key is set
-  if (!process.env.ANTHROPIC_API_KEY) {
-    console.error("Error: ANTHROPIC_API_KEY environment variable is not set.");
+  if (!process.env.OPENAI_API_KEY) {
+    console.error("Error: OPENAI_API_KEY environment variable is not set.");
     process.exit(1);
   }
 
@@ -277,24 +277,21 @@ async function main() {
     const tracer = new LangChainTracer({
       projectName: LANGSMITH_PROJECT,
       client: langSmithClient,
-      // Add additional metadata to each trace
       metadata: {
         environment: process.env.NODE_ENV || "development",
+        model: "gpt-4-0125-preview",
         timestamp: new Date().toISOString(),
-        version: "1.0.0", // You can update this with your actual version
+        version: "1.0.0",
       },
     });
     callbacks.push(tracer);
   }
 
-  // Initialize the Claude language model with LangSmith callbacks
-  const llm = new ChatAnthropic({
-    modelName: "claude-3-5-sonnet-20240620", // Updated to Claude 3.5 Sonnet
-    anthropicApiKey: process.env.ANTHROPIC_API_KEY,
-    temperature: 0,
-    maxTokens: 4000, // Increase max tokens
-    cache: false, // Disable any caching
-    callbacks: callbacks, // Add LangSmith tracing
+  // Initialize the language model with LangSmith callbacks
+  const llm = new ChatOpenAI({
+    temperature: 0.2,
+    model: "gpt-4-0125-preview",
+    callbacks: callbacks,
   });
 
   // Enhanced prompt template with explicit component selection step
@@ -315,47 +312,48 @@ async function main() {
       - NO external component libraries
       - NO StyleSheet or styles objects - use ONLY Tailwind CSS classes
       - All components accept Tailwind CSS classes via the className prop
-      - Images should be ONLY from unsplash.com - NO local images
-      - Components should be imported individually from their respective files, not grouped together in a single import statement.
+      - Components should be imported individually from their respective files, not grouped together in a single import statement. 
       - Output ONLY the complete React component code, no explanations
-      - All generated screens or components should be SCROLLABLE. Use ScrollView or a similar component from the design system to ensure content is properly scrollable.
-      - All generated screens or components should be responsive and mobile-friendly (with some horizontal margin and padding).
-      - PREFER to use HStack and VStack components over Box components whenever possible
       
       OPTIMIZATION:
       - Select the minimum number of components needed
       - Base selection on metadata relevance to the task
-      - Only read full documentation for selected components
-      
-      CRITICAL: You MUST generate COMPLETE and RUNNABLE code. Do not truncate or abbreviate any part of the implementation. If the component is large, focus on generating a complete, working version rather than including every possible feature.`,
+      - Only read full documentation for selected components`,
     ],
     ["human", "{input}"],
     ["placeholder", "{agent_scratchpad}"],
   ]);
 
-  // Create the agent with LangSmith tracing enabled
+  /** Without the {agent_scratchpad}, the agent wouldn't be able to:
+
+    - Remember which tools it has already called
+    - See the results of those tool calls
+    - Make decisions based on previous steps
+  */
+
+  // Create the agent
   const agent = await createToolCallingAgent({
     llm,
     tools,
     prompt,
   });
 
-  // Create a unique run ID for LangSmith (useful for tracking specific runs)
-  const runId = Date.now().toString();
-
   // Create the agent executor with LangSmith tracing
   const agentExecutor = new AgentExecutor({
     agent,
     tools,
-    verbose: false, // controls whether detailed information is shown during the agent's execution
-    maxIterations: 30, // Increase the maximum number of iterations
-    callbacks: callbacks, // Add LangSmith tracing
-    tags: ["design-system-generator", `query-${runId}`], // Add tags for easier filtering in LangSmith UI
+    verbose: false,
+    callbacks: callbacks,
+    tags: [
+      "design-system-generator-open",
+      "openai-gpt4-turbo",
+      `query-${Date.now()}`,
+    ],
     metadata: {
-      query: query,
-      components: availableComponents.join(", "),
-      timestamp: new Date().toISOString(),
-    }, // Add metadata for better context in LangSmith
+      environment: process.env.NODE_ENV || "development",
+      model: "gpt-4-0125-preview",
+      version: "1.0.0",
+    },
   });
 
   // Execute the query
@@ -363,7 +361,6 @@ async function main() {
     console.log(`\n🚀 Processing request: "${query}"`);
     console.log("Analyzing component metadata and generating code...\n");
 
-    // Start a new trace in LangSmith with more detailed metadata
     const startTime = Date.now();
     const result = await agentExecutor.invoke({
       input: query,
@@ -372,33 +369,12 @@ async function main() {
         timestamp: new Date().toISOString(),
         availableComponents: availableComponents.length,
         componentsList: availableComponents.join(", "),
-        userId: process.env.USER || "anonymous", // Add user tracking if needed
+        userId: process.env.USER || "anonymous",
       },
     });
 
-    // Get the output, handling different response formats from Claude
-    let finalOutput = "";
-
-    if (typeof result.output === "string") {
-      finalOutput = result.output;
-    } else if (Array.isArray(result.output)) {
-      if (result.output[0] && result.output[0].text) {
-        finalOutput = result.output[0].text;
-      } else {
-        finalOutput = JSON.stringify(result.output);
-      }
-    } else {
-      finalOutput = JSON.stringify(result);
-    }
-
-    // Clean up any result tags or syntax that might be in the output
-    finalOutput = finalOutput.replace(/result\.output\[0\]\.text/g, "");
-    finalOutput = finalOutput.replace(/<result>|<\/result>/g, "");
-    finalOutput = finalOutput.trim();
-
-    // Enhanced LangSmith logging
+    // Log successful execution to LangSmith
     if (langSmithEnabled) {
-      // Log successful completion
       await langSmithClient.createExample({
         inputs: {
           query: query,
@@ -406,7 +382,7 @@ async function main() {
           components: availableComponents,
         },
         outputs: {
-          generated_code: finalOutput,
+          generated_code: result.output,
           execution_time: Date.now() - startTime,
           status: "success",
         },
@@ -418,6 +394,7 @@ async function main() {
         inputs: { type: "usage_metrics" },
         outputs: {
           query_count: 1,
+          model: "gpt-4-0125-preview",
           timestamp: new Date().toISOString(),
           components_used: availableComponents.length,
         },
@@ -425,14 +402,14 @@ async function main() {
       });
     }
 
-    // Print the cleaned output code
+    // Print the output code
     console.log("\n=== Generated Component Code ===\n");
-    console.log(finalOutput);
+    console.log(result.output);
     console.log("\n================================\n");
   } catch (error) {
     console.error("Error generating UI from design system:", error);
 
-    // Enhanced error logging to LangSmith
+    // Log errors to LangSmith
     if (langSmithEnabled) {
       await langSmithClient.createExample({
         inputs: {
@@ -453,3 +430,5 @@ async function main() {
 
 // Run the main function
 main();
+
+//node design-system-generator.js "create a login screen give me the codebase and strictly use only the design system components no html tags should be used"
