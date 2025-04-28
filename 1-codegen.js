@@ -25,10 +25,10 @@ async function generateCode(prompt) {
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
-        model: "gpt-4", // You can change this to gpt-3.5-turbo if needed
+        model: "gpt-4", // tells OpenAI to use GPT-4, you can choose any other model as well
         messages: [
           {
-            role: "system",
+            role: "system", // tells the AI how it should behave
             content:
               "You are a full-stack development expert skilled in both backend (Node.js) and frontend (web and native) development. You are knowledgeable about all major component libraries, programming fundamentals, and relevant languages. When asked to generate code, provide complete, functional code without explanations unless specifically requested. Focus on production-quality code that follows best practices. For UI components, prioritize simplicity and clean design over complexity.",
           },
@@ -37,12 +37,12 @@ async function generateCode(prompt) {
             content: `Generate code for the following request: ${prompt}`,
           },
         ],
-        temperature: 0.7,
+        temperature: 0.7, // controls randomness of the output, 0 is deterministic (very focused), 1 is random (very creative)
       },
       {
         headers: {
-          Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`, // tells OpenAI to use the API key
+          "Content-Type": "application/json", // tells the server you're sending JSON data.
         },
       }
     );
