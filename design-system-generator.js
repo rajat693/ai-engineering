@@ -7,6 +7,11 @@ const { tool } = require("@langchain/core/tools");
 const { ChatPromptTemplate } = require("@langchain/core/prompts");
 const { createToolCallingAgent, AgentExecutor } = require("langchain/agents");
 const { z } = require("zod");
+const {
+  AIMessage,
+  HumanMessage,
+  SystemMessage,
+} = require("@langchain/core/messages");
 
 // Import LangSmith client and tracing utilities
 const { Client } = require("langsmith");
@@ -227,6 +232,7 @@ async function main() {
           .string()
           .describe("The name of the component without .md extension"),
       }),
+      cache_control: { type: "ephemeral" },
     }
   );
 
@@ -240,6 +246,7 @@ async function main() {
       description:
         "Gets metadata (title and description) for all components. Use this FIRST to decide which components are relevant.",
       schema: z.object({}),
+      cache_control: { type: "ephemeral" },
     }
   );
 
@@ -259,6 +266,7 @@ async function main() {
           .array(z.string())
           .describe("Array of component names that are relevant for the task"),
       }),
+      cache_control: { type: "ephemeral" },
     }
   );
 
@@ -293,7 +301,7 @@ async function main() {
     anthropicApiKey: process.env.ANTHROPIC_API_KEY,
     temperature: 0,
     maxTokens: 4000, // Increase max tokens
-    cache: false, // Disable any caching
+    // cache: false, // Disable any caching
     callbacks: callbacks, // Add LangSmith tracing
   });
 
@@ -333,11 +341,59 @@ async function main() {
     ["placeholder", "{agent_scratchpad}"],
   ]);
 
+  const messages = [
+    new SystemMessage({
+      content: [
+        {
+          type: "text",
+          text: `You are a React expert specializing in the provided design system.
+
+            STRICT WORKFLOW (follow in order):
+            1. Use the get_component_metadata tool to see titles and descriptions
+            2. Use the select_components tool to explicitly select which components you need
+            3. Use get_component_docs tool ONLY for the components you selected
+            4. Generate the React component code
+            
+            REQUIREMENTS:
+            - Use ONLY components from the documented design system
+            - NO HTML tags like <div>, <button>, <input>, etc.
+            - NO external component libraries
+            - NO StyleSheet or styles objects - use ONLY Tailwind CSS classes
+            - All components accept Tailwind CSS classes via the className prop
+            - Images should be ONLY from unsplash.com - NO local images
+            - Components should be imported individually from their respective files, not grouped together in a single import statement.
+            - Output ONLY the complete React component code, no explanations
+            - All generated screens or components should be SCROLLABLE. Use ScrollView or a similar component from the design system to ensure content is properly scrollable.
+            - All generated screens or components should be responsive and mobile-friendly (with some horizontal margin and padding).
+            - PREFER to use HStack and VStack components over Box components whenever possible
+            
+            OPTIMIZATION:
+            - Select the minimum number of components needed
+            - Base selection on metadata relevance to the task
+            - Only read full documentation for selected components
+            
+            CRITICAL: You MUST generate COMPLETE and RUNNABLE code. Do not truncate or abbreviate any part of the implementation. If the component is large, focus on generating a complete, working version rather than including every possible feature.`,
+          cache_control: { type: "ephemeral" },
+        },
+      ],
+    }),
+    new HumanMessage({
+      content: [
+        {
+          type: "text",
+          text: query,
+          cache_control: { type: "ephemeral" },
+        },
+      ],
+    }),
+  ];
+
   // Create the agent with LangSmith tracing enabled
   const agent = await createToolCallingAgent({
     llm,
     tools,
     prompt,
+    // messages,
   });
 
   // Create a unique run ID for LangSmith (useful for tracking specific runs)
@@ -347,7 +403,7 @@ async function main() {
   const agentExecutor = new AgentExecutor({
     agent,
     tools,
-    verbose: false, // controls whether detailed information is shown during the agent's execution
+    verbose: true, // controls whether detailed information is shown during the agent's execution
     maxIterations: 30, // Increase the maximum number of iterations
     callbacks: callbacks, // Add LangSmith tracing
     tags: ["design-system-generator", `query-${runId}`], // Add tags for easier filtering in LangSmith UI
@@ -365,16 +421,19 @@ async function main() {
 
     // Start a new trace in LangSmith with more detailed metadata
     const startTime = Date.now();
-    const result = await agentExecutor.invoke({
-      input: query,
-      metadata: {
-        queryType: "design-system",
-        timestamp: new Date().toISOString(),
-        availableComponents: availableComponents.length,
-        componentsList: availableComponents.join(", "),
-        userId: process.env.USER || "anonymous", // Add user tracking if needed
-      },
-    });
+    const llmWithTools = llm.bindTools(tools);
+    const result = await llmWithTools.invoke(messages);
+    // const result = await agentExecutor.invoke({
+    //   input: query,
+    //   metadata: {
+    //     queryType: "design-system",
+    //     timestamp: new Date().toISOString(),
+    //     availableComponents: availableComponents.length,
+    //     componentsList: availableComponents.join(", "),
+    //     userId: process.env.USER || "anonymous", // Add user tracking if needed
+    //   },
+    // });
+    console.log(result, "result");
 
     // Get the output, handling different response formats from Claude
     let finalOutput = "";
