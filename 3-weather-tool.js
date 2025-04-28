@@ -57,8 +57,8 @@ async function main() {
     [weatherTool],
     model,
     {
-      agentType: "zero-shot-react-description",  //allows the AI to use the tool without specific training
-      verbose: false,
+      agentType: "zero-shot-react-description", // allows the AI to use the tool without specific training
+      verbose: false, // if it is set to `true`, it would log all the steps and the reasoning process
     }
   );
 
@@ -74,5 +74,4 @@ async function main() {
 // Run the main function
 main();
 
-
-//node weather-tool.js "What's the weather in Bangalore today?"
+//node 3-weather-tool.js "What's the weather in Bangalore today?"
