@@ -69,4 +69,4 @@ async function generateCode(prompt) {
   }
 })();
 
-// node codegen.js "Create a simple todo list app" - run this command in terminal to generate code
+// node 1-codegen.js "Create a simple todo list app" - run this command in terminal to generate code
