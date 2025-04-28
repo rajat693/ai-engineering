@@ -1,4 +1,5 @@
-#!/usr/bin/env node
+// LangChain is a software framework that helps facilitate the integration of large language models (LLMs) into applications.
+
 require("dotenv").config();
 const { ChatOpenAI } = require("@langchain/openai");
 const { SystemMessage, HumanMessage } = require("@langchain/core/messages");
@@ -25,7 +26,7 @@ async function generateCode(prompt) {
   try {
     // Initialize the ChatOpenAI model
     const model = new ChatOpenAI({
-      modelName: "gpt-4", // You can change this to gpt-3.5-turbo if needed
+      modelName: "gpt-4",
       temperature: 0.7,
       openAIApiKey: apiKey,
     });
@@ -61,4 +62,4 @@ async function generateCode(prompt) {
   }
 })();
 
-//node langchain-codegen.js "create a simple login form in react"  
+//node 2-langchain-codegen.js "create a simple login form in react"  
