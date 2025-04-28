@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const dotenv = require("dotenv");
-const fs = require("fs");
-const path = require("path");
+const fs = require("fs"); // Node.js File System module — used to read/write files.
+const path = require("path"); // Node.js path module — used to handle file paths.
 const { ChatOpenAI } = require("@langchain/openai");
 const { tool } = require("@langchain/core/tools");
 const { ChatPromptTemplate } = require("@langchain/core/prompts");
